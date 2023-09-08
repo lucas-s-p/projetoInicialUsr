@@ -16,9 +16,12 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id  // Para dizer que será a chave primária do banco.
     @GeneratedValue(strategy =  GenerationType.IDENTITY)  // com isso o banco de dados autoincrementa o id.
+    @Column(name="id_user")
     private Long ID;
     @JsonProperty("name")
+    @Column(name="ds_name", nullable = false)
     private String name;
     @JsonProperty("email")
+    @Column(name="ds_email", nullable = false)
     private String email;
 }
