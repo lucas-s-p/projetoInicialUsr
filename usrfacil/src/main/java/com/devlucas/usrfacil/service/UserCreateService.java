@@ -5,10 +5,7 @@ import com.devlucas.usrfacil.model.User;
 
 import java.util.List;
 
-
-public interface UserCRUDService {
+@FunctionalInterface
+public interface UserCreateService {
     User userCreateService(UserPostDto userDTO);
-    User userFindyByIdService(Long id);
-    List<User> userFindAllService();
-    void userDeleteById(Long id);
 }

@@ -7,32 +7,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
-public class UserCRUDPadraoService implements UserCRUDService{
+public class UserCreatePadraoService implements UserCreateService {
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    ModelMapper modelMapper;
+    private UserRepository userRepository;
+    private ModelMapper modelMapper = new ModelMapper();
     @Override
     public User userCreateService(UserPostDto userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         return userRepository.save(user);
-    }
-
-    @Override
-    public User userFindyByIdService(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<User> userFindAllService() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public void userDeleteById(Long id) {
-
     }
 }
