@@ -25,6 +25,6 @@ public class Company {
     private String name;
     //@JoinColumn(name="fk_id_company")
     @Column(name="ds_company")
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)   //EAGER permite que a colecao seja carregada imediatamente.
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)   //EAGER permite que a colecao seja carregada imediatamente.
     private List<Produto> companyProducts;
 }

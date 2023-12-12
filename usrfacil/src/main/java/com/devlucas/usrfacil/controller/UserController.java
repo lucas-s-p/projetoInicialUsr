@@ -2,10 +2,7 @@ package com.devlucas.usrfacil.controller;
 
 import com.devlucas.usrfacil.dto.UserPostDto;
 import com.devlucas.usrfacil.model.User;
-import com.devlucas.usrfacil.service.UserCreateService;
-import com.devlucas.usrfacil.service.UserDeleteService;
-import com.devlucas.usrfacil.service.UserFindAllService;
-import com.devlucas.usrfacil.service.UserFindService;
+import com.devlucas.usrfacil.service.User.UserCrudService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,19 +17,14 @@ import java.util.List;
 //@Controller
 public class UserController {
     @Autowired
-    private UserFindAllService userFindAllService;
-    @Autowired
-    private UserCreateService userCreateService;
-    @Autowired
-    private UserDeleteService userDeleteService;
-    @Autowired
-    private UserFindService userFindService;
+    private UserCrudService userCrudService;
+
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userFindAllService.userFindAllService());
+                .body(userCrudService.userFindAllService());
     }
 
 
@@ -40,18 +32,18 @@ public class UserController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userFindService.userFindyByIdService(id));
+                .body(userCrudService.userFindyByIdService(id));
     }
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody @Valid UserPostDto userPostDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userCreateService.userCreateService(userPostDto));
+                .body(userCrudService.userCreateService(userPostDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        this.userDeleteService.userDeleteById(id);
+        this.userCrudService.userDeleteById(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body("");

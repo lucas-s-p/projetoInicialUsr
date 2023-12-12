@@ -18,7 +18,7 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_produto")
     private Long ID;
-    @JsonProperty("name")
+    @JsonProperty("nome")
     @Column(name="ds_nome", nullable = false)
     private String name;
     @JsonProperty("preco")
