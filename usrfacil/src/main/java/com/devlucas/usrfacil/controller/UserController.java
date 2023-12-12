@@ -1,6 +1,6 @@
 package com.devlucas.usrfacil.controller;
 
-import com.devlucas.usrfacil.dto.UserPostDto;
+import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
 import com.devlucas.usrfacil.service.User.UserCrudService;
 import jakarta.validation.Valid;

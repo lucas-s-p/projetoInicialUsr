@@ -1,6 +1,6 @@
 package com.devlucas.usrfacil.service.User;
 
-import com.devlucas.usrfacil.dto.UserPostDto;
+import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
 
 import java.util.List;

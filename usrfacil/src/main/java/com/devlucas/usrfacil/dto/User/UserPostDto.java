@@ -1,4 +1,4 @@
-package com.devlucas.usrfacil.dto;
+package com.devlucas.usrfacil.dto.User;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -10,9 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPostDto {
-    @Id
-    @Column(name="id_user")
-    private Long ID;
 
     @JsonProperty("name")
     @NotBlank(message = "Nome deve ser obrigatório")

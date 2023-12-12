@@ -1,6 +1,6 @@
 package com.devlucas.usrfacil.user;
 
-import com.devlucas.usrfacil.dto.UserPostDto;
+import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
 import com.devlucas.usrfacil.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;

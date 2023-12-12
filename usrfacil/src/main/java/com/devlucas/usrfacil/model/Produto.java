@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Builder
@@ -25,11 +27,19 @@ public class Produto {
     @Column(name="ds_preco", nullable = false)
     private Double preco;
     @JsonProperty("fabricante")
-    @Column(name="ds_fabricante", nullable = false)
-    private String fabriante;
+    @JoinColumn(name="ds_fabricante")
+    @OneToOne
+    private Fabricante fabriante;
     @JsonProperty("codigoDeBarras")
     @Column(name="ds_cod_barras", nullable = false)
     private String codigoDeBarras;
+    @JsonProperty("dataFabricacao")
+    @Column(name="ds_data_fabricacao", nullable = false)
+    private Date dataFabricação;
+    @JsonProperty("dataValidade")
+    @Column(name="ds_data_validade", nullable = true)
+    private Date dataValidade;
+    @JsonProperty("company")
     @JoinColumn(name = "fk_id_company")
     @ManyToOne
     Company company;
