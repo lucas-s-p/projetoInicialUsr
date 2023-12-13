@@ -1,4 +1,4 @@
-package com.devlucas.usrfacil.controller;
+package com.devlucas.usrfacil.controller.User;
 
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;

@@ -1,7 +1,7 @@
 package com.devlucas.usrfacil.service.User;
 
 import com.devlucas.usrfacil.dto.User.UserPostDto;
-import com.devlucas.usrfacil.exception.UserNaoExisteException;
+import com.devlucas.usrfacil.exception.User.UserNaoExisteException;
 import com.devlucas.usrfacil.model.User;
 import com.devlucas.usrfacil.repository.UserRepository;
 import org.modelmapper.ModelMapper;
