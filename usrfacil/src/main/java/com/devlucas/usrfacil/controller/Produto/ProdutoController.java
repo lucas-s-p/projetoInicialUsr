@@ -1,10 +1,10 @@
-package com.devlucas.usrfacil.controller.Fabricante;
+package com.devlucas.usrfacil.controller.Produto;
 
-import com.devlucas.usrfacil.dto.Fabricante.FabricantePostDto;
+import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
-import com.devlucas.usrfacil.model.Fabricante;
+import com.devlucas.usrfacil.model.Produto;
 import com.devlucas.usrfacil.model.User;
-import com.devlucas.usrfacil.service.Fabricante.FabricanteCrudService;
+import com.devlucas.usrfacil.service.Produto.ProdutoCrudService;
 import com.devlucas.usrfacil.service.User.UserCrudService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController  // configurando a classe para ser um controller e ela vai responder por requesições.
-@RequestMapping(value = "/v1/fabricante", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/produto", produces = MediaType.APPLICATION_JSON_VALUE)
 //@Controller
-public class FabricanteController {
+public class ProdutoController {
     @Autowired
-    private FabricanteCrudService fabricanteCrudService;
+    private ProdutoCrudService produtoCrudService;
 
 
     @GetMapping
-    public ResponseEntity<List<Fabricante>> findAll() {
+    public ResponseEntity<List<Produto>> findAll() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(fabricanteCrudService.fabricanteFindAll());
+                .body(produtoCrudService.produtoFindAll());
     }
 
 
@@ -35,22 +35,21 @@ public class FabricanteController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(fabricanteCrudService.fabricanteFindById(id));
+                .body(produtoCrudService.produtoFindById(id));
     }
     @PostMapping
-    public ResponseEntity<?> createFabricante(@RequestBody @Valid FabricantePostDto fabricantePostDto) {
+    public ResponseEntity<?> createProduto(@RequestBody @Valid ProdutoPostDto produtoPostDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(fabricanteCrudService.fabricanteCreate(fabricantePostDto));
+                .body(produtoCrudService.produtoCreate(produtoPostDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFabricante(@PathVariable Long id) {
-        this.fabricanteCrudService.fabricanteDelete(id);
+    public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
+        this.produtoCrudService.produtoDelete(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body("");
     }
 
 }
-
