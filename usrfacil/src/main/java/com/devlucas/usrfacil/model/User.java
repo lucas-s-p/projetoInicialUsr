@@ -8,20 +8,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_user")   // Notação do jpa para nomear a tabela do banco de dados.
-@Builder   // Se não usar o builder eu não consigo criar um produto nos testes usando, ex: User.builder()
-@Data      // Se não usar eu não consigo nos testes acessar a classe, ex: getName(), setName(),....
+@Table(name = "tb_user")
+@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id  // Para dizer que será a chave primária do banco.
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)  // com isso o banco de dados autoincrementa o id.
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name="id_user")
     private Long ID;
     @JsonProperty("name")
     @Column(name="ds_name", nullable = false)
     private String name;
+
+    @JsonProperty("cpf")
+    @Column(name="ds_cpf", nullable = false)
+    private String cpf;
     @JsonProperty("email")
     @Column(name="ds_email", nullable = false)
     private String email;
+    @JsonProperty("profissao")
+    @Column(name="ds_profissao", nullable = false)
+    private String profissao;
+    @JsonProperty
+    @Column(name="ds_sexo", nullable = false)
+    private String sexo;
 }

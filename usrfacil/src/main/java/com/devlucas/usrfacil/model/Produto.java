@@ -1,6 +1,5 @@
 package com.devlucas.usrfacil.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -25,9 +23,18 @@ public class Produto {
     @JsonProperty("nome")
     @Column(name="ds_nome", nullable = false)
     private String name;
-    @JsonProperty("preco")
-    @Column(name="ds_preco", nullable = false)
-    private Double preco;
+    @JsonProperty("preco_compra")
+    @Column(name="ds_preco_compra", nullable = false)
+    private Double preco_compra;
+    @JsonProperty("preco_venda")
+    @Column(name="ds_preco_venda", nullable = false)
+    private Double preco_venda;
+    @JsonProperty("quantidade")
+    @Column(name="ds_quantidade", nullable = false)
+    private Integer quantidade;
+    @JsonProperty("descricao")
+    @Column(name = "ds_descricao", nullable = false)
+    private String descricao;
     @JsonProperty("fabricante")
     @JoinColumn(name="ds_fabricante")
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})

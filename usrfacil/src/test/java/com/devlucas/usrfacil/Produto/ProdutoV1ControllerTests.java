@@ -61,10 +61,18 @@ public class ProdutoV1ControllerTests {
             objectMapper.registerModule(new JavaTimeModule());
             company = companyRepository.save(Company.builder()
                     .name("Casas Bahia")
+                    .cnpj("122133")
+                    .email("casas@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new ArrayList<>())
                     .companyProducts(new ArrayList<>())
                     .build());
             fabricante = fabricanteRepository.save(Fabricante.builder()
-                    .nome("Lucas")
+                    .nome("LucasVendas")
+                    .cnpj("324542")
+                    .descricao("empresa voltada para produção.")
+                    .email("lucasvendas@gmail.com")
+                    .telefones(new ArrayList<>())
                     .build());
             produtoPostDto =   ProdutoPostDto.builder()
                     .name("Cadeira")
@@ -73,7 +81,10 @@ public class ProdutoV1ControllerTests {
                     .dataFabricação(new Date("12/03/2023"))
                     .dataValidade(new Date("12/01/2024"))
                     .fabriante(fabricante)
-                    .preco(23.54)
+                    .preco_compra(23.00)
+                    .preco_venda(30.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
                     .build();
 
             produtoPostDto1 = ProdutoPostDto.builder()
@@ -83,7 +94,10 @@ public class ProdutoV1ControllerTests {
                     .dataFabricação(new Date("12/03/2020"))
                     .dataValidade(new Date("12/01/2024"))
                     .fabriante(fabricante)
-                    .preco(53.54)
+                    .preco_compra(223.00)
+                    .preco_venda(380.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(10)
                     .build();
 
             produto1 =  produtoRepository.save(modelMapper.map(produtoPostDto1, Produto.class));

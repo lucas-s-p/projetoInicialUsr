@@ -46,11 +46,19 @@ public class CompanyV1ControllerTests {
             objectMapper.registerModule(new JavaTimeModule());
             companyPostDto =   CompanyPostDto.builder()
                     .name("Casas Bahia")
+                    .cnpj("122133")
+                    .email("casas@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new ArrayList<>())
                     .companyProducts(new ArrayList<>())
                     .build();
 
             companyPostDto1 = CompanyPostDto.builder()
                     .name("Magalu")
+                    .cnpj("122133")
+                    .email("magalu@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new ArrayList<>())
                     .companyProducts(new ArrayList<>())
                     .build();
             company1 =  companyRepository.save(modelMapper.map(companyPostDto1, Company.class));

@@ -44,6 +44,9 @@ public class UserV1ControllerTests {
             userPostDto = UserPostDto.builder()
                     .email("@s")
                     .name("pablo")
+                    .cpf("3244222434")
+                    .sexo("Masculino")
+                    .profissao("Professor")
                     .build();
         }
 
@@ -79,11 +82,17 @@ public class UserV1ControllerTests {
             UserPostDto userPostDto1 = UserPostDto.builder()
                     .name("ze")
                     .email("@sa")
+                    .cpf("3244222434")
+                    .sexo("Não binário")
+                    .profissao("Professor")
                     .build();
             User user1 = modelMapper.map(userPostDto1, User.class);
             UserPostDto userPostDto2 = UserPostDto.builder()
                     .name("maria")
                     .email("@saw")
+                    .cpf("3244222434")
+                    .sexo("Feminino")
+                    .profissao("Professora")
                     .build();
             User user2 = modelMapper.map(userPostDto1, User.class);
             userRepository.save(user1);
@@ -106,11 +115,17 @@ public class UserV1ControllerTests {
             UserPostDto userPostDto1 = UserPostDto.builder()
                     .name("ze")
                     .email("@sa")
+                    .cpf("32442267734")
+                    .sexo("Masculino")
+                    .profissao("Professor")
                     .build();
             User user1 = modelMapper.map(userPostDto1, User.class);
             UserPostDto userPostDto2 = UserPostDto.builder()
                     .name("maria")
                     .email("@saw")
+                    .cpf("3244222434")
+                    .sexo("Feminino")
+                    .profissao("Professora")
                     .build();
             User user2 = modelMapper.map(userPostDto1, User.class);
             User user = userRepository.save(user1);
@@ -134,11 +149,17 @@ public class UserV1ControllerTests {
             UserPostDto userPostDto1 = UserPostDto.builder()
                     .name("ze")
                     .email("@sa")
+                    .cpf("3244222434")
+                    .sexo("Masculino")
+                    .profissao("Professor")
                     .build();
             User user1 = modelMapper.map(userPostDto1, User.class);
             UserPostDto userPostDto2 = UserPostDto.builder()
                     .name("maria")
                     .email("@saw")
+                    .cpf("3341455453")
+                    .sexo("Feminino")
+                    .profissao("Professora")
                     .build();
             User user2 = modelMapper.map(userPostDto1, User.class);
             User user = userRepository.save(user1);

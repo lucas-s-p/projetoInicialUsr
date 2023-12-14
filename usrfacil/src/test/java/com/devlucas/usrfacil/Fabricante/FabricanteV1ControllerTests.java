@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,11 +45,19 @@ public class FabricanteV1ControllerTests {
         void setup() {
             objectMapper.registerModule(new JavaTimeModule());
             fabricantePostDto =   FabricantePostDto.builder()
-                    .nome("Lucas")
+                    .nome("LucasVendas")
+                    .cnpj("324542")
+                    .descricao("empresa voltada para produção.")
+                    .email("lucasvendas@gmail.com")
+                    .telefones(new ArrayList<>())
                     .build();
 
             fabricantePostDto1 = FabricantePostDto.builder()
-                    .nome("Joao")
+                    .nome("JoaoVendas")
+                    .cnpj("32454222")
+                    .descricao("empresa voltada para produção.")
+                    .email("joaovendas@gmail.com")
+                    .telefones(new ArrayList<>())
                     .build();
             fabricante1 =  fabricanteRepository.save(modelMapper.map(fabricantePostDto1, Fabricante.class));
         }
@@ -71,7 +80,7 @@ public class FabricanteV1ControllerTests {
 
             Fabricante resultado = objectMapper.readValue(responseJSONString, Fabricante.class);
             //Assert
-            assertEquals("Lucas", resultado.getNome());
+            assertEquals("LucasVendas", resultado.getNome());
 
         }
 
@@ -89,7 +98,7 @@ public class FabricanteV1ControllerTests {
 
             Fabricante resultado = objectMapper.readValue(responseJSONString, Fabricante.class);
             //Assert
-            assertEquals("Joao", resultado.getNome());
+            assertEquals("JoaoVendas", resultado.getNome());
         }
 
         @Test

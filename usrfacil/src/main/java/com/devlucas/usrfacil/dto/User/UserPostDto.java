@@ -12,9 +12,18 @@ import lombok.*;
 public class UserPostDto {
 
     @JsonProperty("name")
-    @NotBlank(message = "Nome deve ser obrigatório")
+    @NotBlank(message = "Nome deve ser obrigatório!")
     private String name;
     @JsonProperty("email")
-    @NotBlank(message = "Email deve ser obrigatório")
+    @NotBlank(message = "Email deve ser obrigatório!")
     private String email;
+    @JsonProperty("cpf")
+    @NotBlank(message = "Cpf deve ser obrigatório!")
+    private String cpf;
+    @JsonProperty("profissao")
+    @NotBlank(message = "Profisssão deve ser obrigatório!")
+    private String profissao;
+    @JsonProperty
+    @NotBlank(message = "Sexo deve ser obrigatório!")
+    private String sexo;
 }

@@ -23,6 +23,19 @@ public class Company {
     @JsonProperty("name")
     @Column(name="ds_nome", nullable = false)
     private String name;
+    @JsonProperty("email")
+    @Column(name = "ds_email", nullable = false)
+    private String email;
+    @JsonProperty("cnpj")
+    @Column(name = "ds_cnpj", nullable = false)
+    private String cnpj;
+    @JsonProperty("descricao")
+    @Column(name = "ds_descricao", nullable = false)
+    private String descricao;
+    @JsonProperty("telefones")
+    @Column(name = "ds_telefones", nullable = false)
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Telefone> telefones;
     @Column(name="ds_company")
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)   //EAGER permite que a colecao seja carregada imediatamente.
     private List<Produto> companyProducts;

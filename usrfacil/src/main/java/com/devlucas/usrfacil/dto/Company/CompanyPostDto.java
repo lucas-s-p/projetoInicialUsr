@@ -1,6 +1,7 @@
 package com.devlucas.usrfacil.dto.Company;
 
 import com.devlucas.usrfacil.model.Produto;
+import com.devlucas.usrfacil.model.Telefone;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
@@ -18,9 +19,21 @@ import java.util.List;
 @AllArgsConstructor
 public class CompanyPostDto {
     @JsonProperty("name")
-    @NotBlank(message = "Nome deve ser obrigatório")
+    @NotBlank(message = "Nome deve ser obrigatório!")
     private String name;
     @JsonProperty("produto")
-    @NotBlank(message = "Produto deve ser obrigatório")
+    @NotBlank(message = "Produto deve ser obrigatório!")
     private List<Produto> companyProducts;
+    @JsonProperty("email")
+    @NotBlank(message = "Email deve ser obrigatório!")
+    private String email;
+    @JsonProperty("cnpj")
+    @NotBlank(message = "Cnpj deve ser obrigatório!")
+    private String cnpj;
+    @JsonProperty("descricao")
+    @NotBlank(message = "Descrição deve ser obrigatório!")
+    private String descricao;
+    @JsonProperty("telefones")
+    @NotBlank(message = "Telefone deve ser obrigatório!")
+    private List<Telefone> telefones;
 }
