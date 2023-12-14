@@ -34,22 +34,24 @@ public class UserV1ControllerTests {
 
     ObjectMapper objectMapper = new ObjectMapper();
     ModelMapper modelMapper = new ModelMapper();
-    UserPostDto userPostDto;
-    @BeforeEach
-    void setup() {
-        objectMapper.registerModule(new JavaTimeModule());
-        userPostDto = UserPostDto.builder()
-                .email("@s")
-                .name("pablo")
-                .build();
-    }
 
-    @AfterEach
-    void tearDown() {
-        userRepository.deleteAll();
-    }
     @Nested
     class TestandoCRUD {
+        UserPostDto userPostDto;
+        @BeforeEach
+        void setup() {
+            objectMapper.registerModule(new JavaTimeModule());
+            userPostDto = UserPostDto.builder()
+                    .email("@s")
+                    .name("pablo")
+                    .build();
+        }
+
+        @AfterEach
+        void tearDown() {
+            userRepository.deleteAll();
+        }
+
         @Test
         @DisplayName("Criando usuario")
         void testeAoCriarUsuario() throws Exception {

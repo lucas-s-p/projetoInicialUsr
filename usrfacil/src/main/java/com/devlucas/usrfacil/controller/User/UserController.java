@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController  // configurando a classe para ser um controller e ela vai responder por requesições.
 @RequestMapping(value = "/v1/users", produces = MediaType.APPLICATION_JSON_VALUE)
-//@Controller
 public class UserController {
     @Autowired
     private UserCrudService userCrudService;

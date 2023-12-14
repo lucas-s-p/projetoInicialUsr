@@ -1,5 +1,6 @@
 package com.devlucas.usrfacil.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,7 @@ public class Produto {
     private Double preco;
     @JsonProperty("fabricante")
     @JoinColumn(name="ds_fabricante")
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Fabricante fabriante;
     @JsonProperty("codigoDeBarras")
     @Column(name="ds_cod_barras", nullable = false)
@@ -41,6 +42,6 @@ public class Produto {
     private Date dataValidade;
     @JsonProperty("company")
     @JoinColumn(name = "fk_id_company")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     Company company;
 }
