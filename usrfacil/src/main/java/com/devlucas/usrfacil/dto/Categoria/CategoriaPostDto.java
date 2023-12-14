@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class CategoriaPostDto {
     @JsonProperty("name")
     @NotBlank(message = "Nome deve ser obrigatório")
-    private String name;
+    private String nome;
 }
