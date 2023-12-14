@@ -42,22 +42,30 @@ public class ProdutoV1ControllerTests {
     ModelMapper modelMapper =  new ModelMapper();
     @Autowired
     ProdutoRepository produtoRepository;
+    @Autowired
+    CompanyRepository companyRepository;
+
+    @Autowired
+    FabricanteRepository fabricanteRepository;
     @Nested
     public class TestCrud {
 
         ProdutoPostDto produtoPostDto;
         ProdutoPostDto produtoPostDto1;
         Produto produto1;
+        Company company;
+        Fabricante fabricante;
+
         @BeforeEach
         void setup() {
             objectMapper.registerModule(new JavaTimeModule());
-            Company company = Company.builder()
+            company = companyRepository.save(Company.builder()
                     .name("Casas Bahia")
                     .companyProducts(new ArrayList<>())
-                    .build();
-            Fabricante fabricante = Fabricante.builder()
+                    .build());
+            fabricante = fabricanteRepository.save(Fabricante.builder()
                     .nome("Lucas")
-                    .build();
+                    .build());
             produtoPostDto =   ProdutoPostDto.builder()
                     .name("Cadeira")
                     .company(company)
@@ -92,6 +100,8 @@ public class ProdutoV1ControllerTests {
             //Act
             String responseJSONString = driver.perform(post(URI_PRODUTO)
                             .contentType(MediaType.APPLICATION_JSON)
+                            .param("companyId", company.getID().toString())
+                            .param("fabricanteId", fabricante.getId().toString())
                             .content(objectMapper.writeValueAsString(produtoPostDto)))
                     .andExpect(status().isCreated())
                     .andDo(print())
@@ -100,7 +110,6 @@ public class ProdutoV1ControllerTests {
             Produto resultado = objectMapper.readValue(responseJSONString, Produto.class);
             //Assert
             assertEquals("Cadeira", resultado.getName());
-
         }
 
         @Test

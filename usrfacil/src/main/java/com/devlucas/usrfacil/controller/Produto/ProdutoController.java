@@ -22,6 +22,16 @@ public class ProdutoController {
     @Autowired
     private ProdutoCrudService produtoCrudService;
 
+    @PostMapping
+    public ResponseEntity<?> createProduto(
+            @RequestBody @Valid ProdutoPostDto produtoPostDto,
+            @RequestParam Long companyId,
+            @RequestParam Long fabricanteId
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(produtoCrudService.produtoCreate(produtoPostDto, companyId, fabricanteId));
+    }
 
     @GetMapping
     public ResponseEntity<List<Produto>> findAll() {
@@ -30,18 +40,11 @@ public class ProdutoController {
                 .body(produtoCrudService.produtoFindAll());
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(produtoCrudService.produtoFindById(id));
-    }
-    @PostMapping
-    public ResponseEntity<?> createProduto(@RequestBody @Valid ProdutoPostDto produtoPostDto) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(produtoCrudService.produtoCreate(produtoPostDto));
     }
 
     @DeleteMapping("/{id}")
