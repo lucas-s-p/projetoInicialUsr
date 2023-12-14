@@ -51,5 +51,9 @@ public class Produto {
     @JsonProperty("company")
     @JoinColumn(name = "fk_id_company")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    Company company;
+    private Company company;
+    @JsonProperty("categoria")
+    @JoinColumn(name = "fk_id_categoria")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Categoria categoria;
 }

@@ -1,9 +1,9 @@
 package com.devlucas.usrfacil.dto.Produto;
 
+import com.devlucas.usrfacil.model.Categoria;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.model.Fabricante;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,4 +47,7 @@ public class ProdutoPostDto {
     @JsonProperty("company")
     @NotBlank(message = "Empresa deve ser obrigatório!")
     Company company;
+    @JsonProperty("categoria")
+    @NotBlank(message = "Categoria deve ser obrigatório!")
+    private Categoria categoria;
 }

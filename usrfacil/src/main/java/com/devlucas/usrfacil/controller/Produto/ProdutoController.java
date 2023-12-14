@@ -26,11 +26,12 @@ public class ProdutoController {
     public ResponseEntity<?> createProduto(
             @RequestBody @Valid ProdutoPostDto produtoPostDto,
             @RequestParam Long companyId,
-            @RequestParam Long fabricanteId
+            @RequestParam Long fabricanteId,
+            @RequestParam Long categoriaId
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(produtoCrudService.produtoCreate(produtoPostDto, companyId, fabricanteId));
+                .body(produtoCrudService.produtoCreate(produtoPostDto, companyId, fabricanteId, categoriaId));
     }
 
     @GetMapping

@@ -1,9 +1,12 @@
 package com.devlucas.usrfacil.Produto;
 
+import com.devlucas.usrfacil.dto.Categoria.CategoriaPostDto;
 import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
+import com.devlucas.usrfacil.model.Categoria;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.model.Fabricante;
 import com.devlucas.usrfacil.model.Produto;
+import com.devlucas.usrfacil.repository.CategoriaRepository;
 import com.devlucas.usrfacil.repository.CompanyRepository;
 import com.devlucas.usrfacil.repository.FabricanteRepository;
 import com.devlucas.usrfacil.repository.ProdutoRepository;
@@ -47,6 +50,9 @@ public class ProdutoV1ControllerTests {
 
     @Autowired
     FabricanteRepository fabricanteRepository;
+
+    @Autowired
+    CategoriaRepository categoriaRepository;
     @Nested
     public class TestCrud {
 
@@ -55,6 +61,7 @@ public class ProdutoV1ControllerTests {
         Produto produto1;
         Company company;
         Fabricante fabricante;
+        Categoria categoria;
 
         @BeforeEach
         void setup() {
@@ -73,6 +80,11 @@ public class ProdutoV1ControllerTests {
                     .descricao("empresa voltada para produção.")
                     .email("lucasvendas@gmail.com")
                     .telefones(new ArrayList<>())
+                    .build());
+
+            categoria = categoriaRepository.save(Categoria.builder()
+                    .nome("Varejos")
+                    .produto(new ArrayList<>())
                     .build());
             produtoPostDto =   ProdutoPostDto.builder()
                     .name("Cadeira")
@@ -116,6 +128,7 @@ public class ProdutoV1ControllerTests {
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("companyId", company.getID().toString())
                             .param("fabricanteId", fabricante.getId().toString())
+                            .param("categoriaId", categoria.getId().toString())
                             .content(objectMapper.writeValueAsString(produtoPostDto)))
                     .andExpect(status().isCreated())
                     .andDo(print())

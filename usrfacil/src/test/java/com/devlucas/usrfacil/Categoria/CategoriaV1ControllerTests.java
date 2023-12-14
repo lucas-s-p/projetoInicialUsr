@@ -2,7 +2,6 @@ package com.devlucas.usrfacil.Categoria;
 
 import com.devlucas.usrfacil.dto.Categoria.CategoriaPostDto;
 import com.devlucas.usrfacil.model.Categoria;
-import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.repository.CategoriaRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,10 +46,12 @@ public class CategoriaV1ControllerTests {
             objectMapper.registerModule(new JavaTimeModule());
             categoriaPostDto =   CategoriaPostDto.builder()
                     .nome("Limpeza")
+                    .produto(new ArrayList<>())
                     .build();
 
             categoriaPostDto1 = CategoriaPostDto.builder()
                     .nome("Varejos")
+                    .produto(new ArrayList<>())
                     .build();
             categoria1 =  categoriaRepository.save(modelMapper.map(categoriaPostDto1, Categoria.class));
         }

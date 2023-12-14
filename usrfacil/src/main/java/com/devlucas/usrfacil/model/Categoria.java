@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "categoria")
 @Data
@@ -21,4 +23,8 @@ public class Categoria {
     @Column(name= "ds_nome",  nullable = false)
     @JsonProperty("nome")
     private String nome;
+
+    @JsonProperty("produto")
+    @OneToMany(mappedBy = "categoria", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Produto> produto;
 }
