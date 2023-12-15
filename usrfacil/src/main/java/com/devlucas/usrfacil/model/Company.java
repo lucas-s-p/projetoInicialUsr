@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -35,8 +36,12 @@ public class Company {
     @JsonProperty("telefones")
     @Column(name = "ds_telefones", nullable = false)
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Telefone> telefones;
+    private Set<Telefone> telefones;
     @Column(name="ds_company")
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)   //EAGER permite que a colecao seja carregada imediatamente.
     private List<Produto> companyProducts;
+    @JsonProperty("company")
+    @Column(name = "avaliacaoCompany")
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Avaliacao> avCompany;
 }

@@ -1,10 +1,10 @@
 package com.devlucas.usrfacil.dto.Company;
 
+import com.devlucas.usrfacil.model.Avaliacao;
 import com.devlucas.usrfacil.model.Produto;
 import com.devlucas.usrfacil.model.Telefone;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Builder
 @Data
@@ -35,5 +36,9 @@ public class CompanyPostDto {
     private String descricao;
     @JsonProperty("telefones")
     @NotBlank(message = "Telefone deve ser obrigatório!")
-    private List<Telefone> telefones;
+    private Set<Telefone> telefones;
+    @JsonProperty("avaliações")
+    @NotBlank(message = "Avaliação deve ser obrigatório!")
+    private List<Avaliacao> avCompany;
+
 }

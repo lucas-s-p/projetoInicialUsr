@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -56,4 +57,8 @@ public class Produto {
     @JoinColumn(name = "fk_id_categoria")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Categoria categoria;
+    @JsonProperty("telefones")
+    @Column(name = "avaliacaoProduto")
+    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Avaliacao> avaliacoesProduto;
 }

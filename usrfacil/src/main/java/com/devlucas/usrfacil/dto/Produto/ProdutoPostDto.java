@@ -1,9 +1,14 @@
 package com.devlucas.usrfacil.dto.Produto;
 
+import com.devlucas.usrfacil.model.Avaliacao;
 import com.devlucas.usrfacil.model.Categoria;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.model.Fabricante;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Data
@@ -50,4 +56,7 @@ public class ProdutoPostDto {
     @JsonProperty("categoria")
     @NotBlank(message = "Categoria deve ser obrigatório!")
     private Categoria categoria;
+    @JsonProperty("telefones")
+    @NotBlank(message = "Avaliação deve ser obrigatório!")
+    private List<Avaliacao> avaliacoesProduto;
 }

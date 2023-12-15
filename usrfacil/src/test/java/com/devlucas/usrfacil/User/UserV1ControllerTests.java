@@ -17,10 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -211,8 +208,9 @@ public class UserV1ControllerTests {
                     .cnpj("122133")
                     .email("casas@gmail.com")
                     .descricao("empresa voltada para o ramo de vendas.")
-                    .telefones(new ArrayList<>())
+                    .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
                     .build();
 
             company1 = Company.builder()
@@ -220,8 +218,9 @@ public class UserV1ControllerTests {
                     .cnpj("122133")
                     .email("magalu@gmail.com")
                     .descricao("empresa voltada para o ramo de vendas.")
-                    .telefones(new ArrayList<>())
+                    .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
                     .build();
 
             fabricante = fabricanteRepository.save(Fabricante.builder()
@@ -249,6 +248,7 @@ public class UserV1ControllerTests {
                     .descricao("Produto produzido ecologicamente.")
                     .quantidade(123)
                     .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
                     .build());
 
             produto1 =  produtoRepository.save(Produto.builder()
@@ -263,6 +263,7 @@ public class UserV1ControllerTests {
                     .descricao("Produto produzido ecologicamente.")
                     .quantidade(123)
                     .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
                     .build());
             company.getCompanyProducts().add(produto);
             company1.getCompanyProducts().add(produto1);

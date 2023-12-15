@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,8 +50,9 @@ public class CompanyV1ControllerTests {
                     .cnpj("122133")
                     .email("casas@gmail.com")
                     .descricao("empresa voltada para o ramo de vendas.")
-                    .telefones(new ArrayList<>())
+                    .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
                     .build();
 
             companyPostDto1 = CompanyPostDto.builder()
@@ -58,8 +60,9 @@ public class CompanyV1ControllerTests {
                     .cnpj("122133")
                     .email("magalu@gmail.com")
                     .descricao("empresa voltada para o ramo de vendas.")
-                    .telefones(new ArrayList<>())
+                    .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
                     .build();
             company1 =  companyRepository.save(modelMapper.map(companyPostDto1, Company.class));
         }

@@ -23,6 +23,7 @@ import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,8 +71,9 @@ public class ProdutoV1ControllerTests {
                     .cnpj("122133")
                     .email("casas@gmail.com")
                     .descricao("empresa voltada para o ramo de vendas.")
-                    .telefones(new ArrayList<>())
+                    .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
                     .build());
             fabricante = fabricanteRepository.save(Fabricante.builder()
                     .nome("LucasVendas")
@@ -97,6 +99,7 @@ public class ProdutoV1ControllerTests {
                     .descricao("Produto produzido ecologicamente.")
                     .quantidade(123)
                     .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
                     .build();
 
             produtoPostDto1 = ProdutoPostDto.builder()
@@ -111,6 +114,7 @@ public class ProdutoV1ControllerTests {
                     .descricao("Produto produzido ecologicamente.")
                     .quantidade(10)
                     .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
                     .build();
 
             produto1 =  produtoRepository.save(modelMapper.map(produtoPostDto1, Produto.class));
