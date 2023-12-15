@@ -1,6 +1,5 @@
 package com.devlucas.usrfacil.Produto;
 
-import com.devlucas.usrfacil.dto.Categoria.CategoriaPostDto;
 import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
 import com.devlucas.usrfacil.model.Categoria;
 import com.devlucas.usrfacil.model.Company;
@@ -97,6 +96,7 @@ public class ProdutoV1ControllerTests {
                     .preco_venda(30.00)
                     .descricao("Produto produzido ecologicamente.")
                     .quantidade(123)
+                    .categoria(categoria)
                     .build();
 
             produtoPostDto1 = ProdutoPostDto.builder()
@@ -110,6 +110,7 @@ public class ProdutoV1ControllerTests {
                     .preco_venda(380.00)
                     .descricao("Produto produzido ecologicamente.")
                     .quantidade(10)
+                    .categoria(categoria)
                     .build();
 
             produto1 =  produtoRepository.save(modelMapper.map(produtoPostDto1, Produto.class));

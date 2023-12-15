@@ -3,6 +3,7 @@ package com.devlucas.usrfacil.controller.User;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
 import com.devlucas.usrfacil.service.User.UserCrudService;
+import com.devlucas.usrfacil.service.User.UserFiltragemService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserCrudService userCrudService;
+
+    @Autowired
+    private UserFiltragemService userFiltragemService;
 
 
     @GetMapping
@@ -46,6 +50,20 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body("");
+    }
+
+    @GetMapping("/{idCategoria}/filtragem-preco-menor")
+    public ResponseEntity<?> filtragemMenorPrecoPorCategoria(@PathVariable Long idCategoria) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userFiltragemService.filtragemMenorPreco(idCategoria));
+    }
+
+    @GetMapping("/{idCategoria}/filtragem-preco-maior")
+    public ResponseEntity<?> filtragemMaiorPrecoPorCategoria(@PathVariable Long idCategoria) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userFiltragemService.filtragemMaiorPreco(idCategoria));
     }
 
 }

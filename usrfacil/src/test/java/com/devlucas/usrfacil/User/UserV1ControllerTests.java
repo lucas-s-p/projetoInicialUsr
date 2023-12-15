@@ -1,11 +1,13 @@
 package com.devlucas.usrfacil.User;
 
+import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
-import com.devlucas.usrfacil.model.User;
-import com.devlucas.usrfacil.repository.UserRepository;
+import com.devlucas.usrfacil.model.*;
+import com.devlucas.usrfacil.repository.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,14 +34,14 @@ public class UserV1ControllerTests {
     final String URI_USUARIO = "/v1/users";
     @Autowired
     MockMvc driver;
-    @Autowired
-    UserRepository userRepository;
 
     ObjectMapper objectMapper = new ObjectMapper();
     ModelMapper modelMapper = new ModelMapper();
 
     @Nested
     class TestandoCRUD {
+        @Autowired
+        UserRepository userRepository;
         UserPostDto userPostDto;
         @BeforeEach
         void setup() {
@@ -177,5 +182,132 @@ public class UserV1ControllerTests {
             assertEquals(1, userRepository.findAll().size());
         }
 
+    }
+
+    @Nested
+    @Transactional
+    class TestFiltragem {
+        @Autowired
+        UserRepository userRepository;
+        @Autowired
+        CategoriaRepository categoriaRepository;
+        @Autowired
+        CompanyRepository companyRepository;
+        @Autowired
+        FabricanteRepository fabricanteRepository;
+
+        @Autowired
+        ProdutoRepository produtoRepository;
+        Produto produto;
+        Produto produto1;
+        Company company;
+        Company company1;
+        Fabricante fabricante;
+        Categoria categoria;
+        @BeforeEach
+        void setup() {
+            company = Company.builder()
+                    .name("Casas Bahia")
+                    .cnpj("122133")
+                    .email("casas@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new ArrayList<>())
+                    .companyProducts(new ArrayList<>())
+                    .build();
+
+            company1 = Company.builder()
+                    .name("Magalu")
+                    .cnpj("122133")
+                    .email("magalu@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new ArrayList<>())
+                    .companyProducts(new ArrayList<>())
+                    .build();
+
+            fabricante = fabricanteRepository.save(Fabricante.builder()
+                    .nome("LucasVendas")
+                    .cnpj("324542")
+                    .descricao("empresa voltada para produção.")
+                    .email("lucasvendas@gmail.com")
+                    .telefones(new ArrayList<>())
+                    .build());
+
+            categoria = categoriaRepository.save(Categoria.builder()
+                    .nome("Varejos")
+                    .produto(new ArrayList<>())
+                    .build());
+
+            produto =  produtoRepository.save(Produto.builder()
+                    .name("Cadeira")
+                    .company(company)
+                    .codigoDeBarras("23456789")
+                    .dataFabricação(new Date("12/03/2023"))
+                    .dataValidade(new Date("12/01/2024"))
+                    .fabriante(fabricante)
+                    .preco_compra(23.00)
+                    .preco_venda(30.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
+                    .categoria(categoria)
+                    .build());
+
+            produto1 =  produtoRepository.save(Produto.builder()
+                    .name("Alvejante")
+                    .company(company1)
+                    .codigoDeBarras("23456789")
+                    .dataFabricação(new Date("12/03/2023"))
+                    .dataValidade(new Date("12/01/2024"))
+                    .fabriante(fabricante)
+                    .preco_compra(23.00)
+                    .preco_venda(21.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
+                    .categoria(categoria)
+                    .build());
+            company.getCompanyProducts().add(produto);
+            company1.getCompanyProducts().add(produto1);
+            companyRepository.save(company1);
+            companyRepository.save(company);
+        }
+
+        @AfterEach
+        void tearDown() {
+            userRepository.deleteAll();
+            companyRepository.deleteAll();
+            categoriaRepository.deleteAll();
+            fabricanteRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("Buscando o menor preço de um produto de qualquer empresa a partir de uma categoria")
+        void testFiltragemMenorPrecoPorCategoria() throws Exception{
+            //Arrange
+            //Act
+            String responseJSONString = driver.perform(get(URI_USUARIO + "/" + categoria.getId() + "/filtragem-preco-menor")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            Produto resultado = objectMapper.readValue(responseJSONString, Produto.class);
+            //Assert
+            assertEquals(21.00, resultado.getPreco_venda());
+        }
+
+        @Test
+        @DisplayName("Buscando o maior preço de um produto de qualquer empresa a partir de uma categoria")
+        void testFiltragemMaiorPrecoPorCategoria() throws Exception{
+            //Arrange
+            //Act
+            String responseJSONString = driver.perform(get(URI_USUARIO + "/" + categoria.getId() + "/filtragem-preco-maior")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            Produto resultado = objectMapper.readValue(responseJSONString, Produto.class);
+            //Assert
+            assertEquals(30.00, resultado.getPreco_venda());
+        }
     }
 }
