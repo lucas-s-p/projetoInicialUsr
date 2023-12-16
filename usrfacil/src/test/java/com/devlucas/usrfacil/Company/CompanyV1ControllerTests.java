@@ -252,4 +252,97 @@ public class CompanyV1ControllerTests {
 
 
     }
+
+    @Nested
+    @Transactional
+    @DisplayName("Classe de testes sobre adição de objetos a empresa")
+    public class TestAdicaoObjetos {
+        @Autowired
+        CompanyRepository companyRepository;
+        @Autowired
+        ProdutoRepository produtoRepository;
+        @Autowired
+        FabricanteRepository fabricanteRepository;
+        @Autowired
+        CategoriaRepository categoriaRepository;
+        Fabricante fabricante;
+        Categoria categoria;
+        Company company1;
+        Company company;
+        Produto produto;
+        @BeforeEach
+        void setup() {
+            objectMapper.registerModule(new JavaTimeModule());
+            fabricante = fabricanteRepository.save(Fabricante.builder()
+                    .nome("LucasVendas")
+                    .cnpj("324542")
+                    .descricao("empresa voltada para produção.")
+                    .email("lucasvendas@gmail.com")
+                    .telefones(new ArrayList<>())
+                    .build());
+
+            categoria = categoriaRepository.save(Categoria.builder()
+                    .nome("Varejos")
+                    .produto(new ArrayList<>())
+                    .build());
+            company= companyRepository.save(Company.builder()
+                    .name("Casas Bahia")
+                    .cnpj("122133")
+                    .email("casas@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new HashSet<>())
+                    .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
+                    .build());
+
+            company1 = companyRepository.save(Company.builder()
+                    .name("Magalu")
+                    .cnpj("122133")
+                    .email("magalu@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new HashSet<>())
+                    .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
+                    .build());
+            produto =  produtoRepository.save(Produto.builder()
+                    .name("Cadeira")
+                    .company(company)
+                    .codigoDeBarras("23456789")
+                    .dataFabricação(new Date("12/03/2023"))
+                    .dataValidade(new Date("12/01/2024"))
+                    .fabriante(fabricante)
+                    .preco_compra(23.00)
+                    .preco_venda(30.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
+                    .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
+                    .build());
+        }
+
+        @AfterEach
+        void tearDown() {
+            companyRepository.deleteAll();
+            categoriaRepository.deleteAll();
+            fabricanteRepository.deleteAll();
+            produtoRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("Adicionando produto a company")
+        void testAdicionaProdutoCompany() throws Exception {
+            //Arrange
+            //Act
+            String responseJSONSttring = driver.perform(post(URI_EMPRESA + "/" + produto.getID() + "/adicionar-produto")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated())
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            //Assert
+            assertEquals(1, company.getCompanyProducts().size());
+        }
+
+
+    }
 }

@@ -2,9 +2,12 @@ package com.devlucas.usrfacil.controller.Company;
 
 import com.devlucas.usrfacil.dto.Company.CompanyAtualizaValorProdutoDto;
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
+import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
 import com.devlucas.usrfacil.model.Company;
+import com.devlucas.usrfacil.service.Company.CompanyAdicionaObjetosService;
 import com.devlucas.usrfacil.service.Company.CompanyCrudService;
 import com.devlucas.usrfacil.service.Company.ModificaValorProdutoService;
+import com.devlucas.usrfacil.service.Produto.ProdutoCrudService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,9 @@ import java.util.List;
 public class CompanyController {
     @Autowired
     private CompanyCrudService companyCrudService;
+
+    @Autowired
+    private CompanyAdicionaObjetosService companyAdicionaObjetosService;
 
     @Autowired
     private ModificaValorProdutoService modificaValorProdutoService;
@@ -61,6 +67,16 @@ public class CompanyController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(modificaValorProdutoService.modificaValorProduto(companyAtualizaValorProdutoDto, id, idProduto));
+    }
+
+    @PostMapping("/{idProduto}/adicionar-produto")
+    public ResponseEntity<?> adicionarProduto(
+            @PathVariable Long idProduto
+            ) {
+        this.companyAdicionaObjetosService.adicionaProduto(idProduto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("");
     }
 
 }
