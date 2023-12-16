@@ -277,6 +277,7 @@ public class UserV1ControllerTests {
             companyRepository.deleteAll();
             categoriaRepository.deleteAll();
             fabricanteRepository.deleteAll();
+            produtoRepository.deleteAll();
         }
 
         @Test

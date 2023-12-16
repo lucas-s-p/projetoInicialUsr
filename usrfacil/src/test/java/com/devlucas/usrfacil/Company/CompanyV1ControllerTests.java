@@ -1,20 +1,30 @@
 package com.devlucas.usrfacil.Company;
 
+import com.devlucas.usrfacil.dto.Company.CompanyAtualizaValorProdutoDto;
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
+import com.devlucas.usrfacil.model.Categoria;
 import com.devlucas.usrfacil.model.Company;
+import com.devlucas.usrfacil.model.Fabricante;
+import com.devlucas.usrfacil.model.Produto;
+import com.devlucas.usrfacil.repository.CategoriaRepository;
 import com.devlucas.usrfacil.repository.CompanyRepository;
+import com.devlucas.usrfacil.repository.FabricanteRepository;
+import com.devlucas.usrfacil.repository.ProdutoRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -138,5 +148,108 @@ public class CompanyV1ControllerTests {
             //Assert
             assertEquals(1, companyRepository.findAll().size());
         }
+    }
+
+    @Nested
+    @Transactional
+    @DisplayName("Classe de testes sobre atualizações básicas feitas pela company")
+    public class TestAtualizacoes {
+        @Autowired
+        CompanyRepository companyRepository;
+        @Autowired
+        ProdutoRepository produtoRepository;
+        @Autowired
+        FabricanteRepository fabricanteRepository;
+        @Autowired
+        CategoriaRepository categoriaRepository;
+        Fabricante fabricante;
+        Categoria categoria;
+        Company company1;
+        Company company;
+        Produto produto;
+        @BeforeEach
+        void setup() {
+            objectMapper.registerModule(new JavaTimeModule());
+            fabricante = fabricanteRepository.save(Fabricante.builder()
+                    .nome("LucasVendas")
+                    .cnpj("324542")
+                    .descricao("empresa voltada para produção.")
+                    .email("lucasvendas@gmail.com")
+                    .telefones(new ArrayList<>())
+                    .build());
+
+            categoria = categoriaRepository.save(Categoria.builder()
+                    .nome("Varejos")
+                    .produto(new ArrayList<>())
+                    .build());
+            produto =  produtoRepository.save(Produto.builder()
+                    .name("Cadeira")
+                    .company(company)
+                    .codigoDeBarras("23456789")
+                    .dataFabricação(new Date("12/03/2023"))
+                    .dataValidade(new Date("12/01/2024"))
+                    .fabriante(fabricante)
+                    .preco_compra(23.00)
+                    .preco_venda(30.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
+                    .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
+                    .build());
+            company= Company.builder()
+                    .name("Casas Bahia")
+                    .cnpj("122133")
+                    .email("casas@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new HashSet<>())
+                    .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
+                    .build();
+
+            company1 = Company.builder()
+                    .name("Magalu")
+                    .cnpj("122133")
+                    .email("magalu@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new HashSet<>())
+                    .companyProducts(new ArrayList<>())
+                    .avCompany(new ArrayList<>())
+                    .build();
+            company.getCompanyProducts().add(produto);
+            company1.getCompanyProducts().add(produto);
+            companyRepository.save(company);
+            companyRepository.save(company1);
+        }
+
+        @AfterEach
+        void tearDown() {
+            companyRepository.deleteAll();
+            categoriaRepository.deleteAll();
+            fabricanteRepository.deleteAll();
+            produtoRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("Alterando o valor de venda de um produto")
+        void testalterandoValorDeVendaDoProduto() throws Exception {
+            //Arrange
+            CompanyAtualizaValorProdutoDto companyAtualizaValorProdutoDto = CompanyAtualizaValorProdutoDto.builder()
+                    .valor(230.00)
+                    .build();
+            //Act
+            String responseJSONSttring = driver.perform(patch(URI_EMPRESA + "/" + company.getID() + "/modifica-valor-produto/" + produto.getID())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(companyAtualizaValorProdutoDto)))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            Produto resultado = objectMapper.readValue(responseJSONSttring, Produto.class);
+            //Assert
+            assertEquals(230.00, resultado.getPreco_venda());
+            assertEquals(230.00, company.getCompanyProducts().get(0).getPreco_venda());
+        }
+
+
     }
 }

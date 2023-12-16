@@ -1,9 +1,10 @@
 package com.devlucas.usrfacil.controller.Company;
 
+import com.devlucas.usrfacil.dto.Company.CompanyAtualizaValorProdutoDto;
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
-import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.service.Company.CompanyCrudService;
+import com.devlucas.usrfacil.service.Company.ModificaValorProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ import java.util.List;
 public class CompanyController {
     @Autowired
     private CompanyCrudService companyCrudService;
+
+    @Autowired
+    private ModificaValorProdutoService modificaValorProdutoService;
 
     @PostMapping
     public ResponseEntity<?> createCompany(@RequestBody @Valid CompanyPostDto companyPostDto) {
@@ -46,6 +50,17 @@ public class CompanyController {
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body("");
+    }
+
+    @PatchMapping("/{id}/modifica-valor-produto/{idProduto}")
+    public ResponseEntity<?> modificaValorDoProduto(
+            @RequestBody @Valid CompanyAtualizaValorProdutoDto companyAtualizaValorProdutoDto,
+            @PathVariable Long id,
+            @PathVariable  Long idProduto
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(modificaValorProdutoService.modificaValorProduto(companyAtualizaValorProdutoDto, id, idProduto));
     }
 
 }
