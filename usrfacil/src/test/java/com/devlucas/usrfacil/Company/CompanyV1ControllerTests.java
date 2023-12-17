@@ -342,7 +342,5 @@ public class CompanyV1ControllerTests {
             //Assert
             assertEquals(1, company.getCompanyProducts().size());
         }
-
-
     }
 }

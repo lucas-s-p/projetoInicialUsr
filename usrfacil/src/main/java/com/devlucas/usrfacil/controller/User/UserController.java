@@ -1,7 +1,9 @@
 package com.devlucas.usrfacil.controller.User;
 
+import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoProdutoPostDto;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
+import com.devlucas.usrfacil.service.User.UserAvaliaService;
 import com.devlucas.usrfacil.service.User.UserCrudService;
 import com.devlucas.usrfacil.service.User.UserFiltragemService;
 import jakarta.validation.Valid;
@@ -22,6 +24,8 @@ public class UserController {
     @Autowired
     private UserFiltragemService userFiltragemService;
 
+    @Autowired
+    private UserAvaliaService userAvaliaService;
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
@@ -64,6 +68,17 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userFiltragemService.filtragemMaiorPreco(idCategoria));
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> userAvaliaProduto(
+            @RequestBody @Valid AvaliacaoProdutoPostDto avaliacaoProdutoPostDto,
+            @PathVariable Long idProduto
+    ) {
+        this.userAvaliaService.userAvaliaProduto(avaliacaoProdutoPostDto, idProduto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("");
     }
 
 }
