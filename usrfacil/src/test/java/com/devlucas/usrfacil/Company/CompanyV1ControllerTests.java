@@ -242,7 +242,8 @@ public class CompanyV1ControllerTests {
             //Act
             String responseJSONSttring = driver.perform(patch(URI_EMPRESA + "/" + company.getID() + "/modifica-valor-produto/" + produto.getID())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(companyAtualizaValorProdutoDto)))
+                    .content(objectMapper.writeValueAsString(companyAtualizaValorProdutoDto))
+                    .param("codigoAcesso", company.getChaveDeAcesso()))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -336,8 +337,9 @@ public class CompanyV1ControllerTests {
         void testAdicionaProdutoCompany() throws Exception {
             //Arrange
             //Act
-            String responseJSONSttring = driver.perform(post(URI_EMPRESA + "/" + produto.getID() + "/adicionar-produto")
-                            .contentType(MediaType.APPLICATION_JSON))
+            String responseJSONString = driver.perform(post(URI_EMPRESA + "/" + produto.getID() + "/adicionar-produto")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .param("codigoAcesso", produto.getCompany().getChaveDeAcesso()))
                     .andExpect(status().isCreated())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();

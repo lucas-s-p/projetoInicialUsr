@@ -2,6 +2,7 @@ package com.devlucas.usrfacil.service.Company;
 
 import com.devlucas.usrfacil.exception.Company.CompanyNaoExisteException;
 import com.devlucas.usrfacil.exception.Produto.ProdutoNaoExisteException;
+import com.devlucas.usrfacil.exception.Validacao.CodigoAcessoInvalidoException;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.model.Produto;
 import com.devlucas.usrfacil.repository.CompanyRepository;
@@ -18,9 +19,12 @@ public class CompanyAdicionaObjetosPadraoService implements CompanyAdicionaObjet
     CompanyRepository companyRepository;
 
     @Override
-    public void adicionaProduto(Long idProduto) {
+    public void adicionaProduto(Long idProduto, String codigoAcesso) {
         Produto produto = produtoRepository.findById(idProduto).orElseThrow(ProdutoNaoExisteException::new);
         Company company = companyRepository.findById(produto.getCompany().getID()).orElseThrow(CompanyNaoExisteException::new);
+        if (!company.getChaveDeAcesso().equals(codigoAcesso)) {
+           throw new CodigoAcessoInvalidoException();
+        }
         company.getCompanyProducts().add(produto);
     }
 }

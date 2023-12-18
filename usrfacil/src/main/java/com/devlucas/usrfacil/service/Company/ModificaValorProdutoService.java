@@ -5,5 +5,5 @@ import com.devlucas.usrfacil.model.Produto;
 
 @FunctionalInterface
 public interface ModificaValorProdutoService {
-    Produto modificaValorProduto(CompanyAtualizaValorProdutoDto companyAtualizaValorProdutoDto, Long idCompany, Long idproduto);
+    Produto modificaValorProduto(CompanyAtualizaValorProdutoDto companyAtualizaValorProdutoDto, Long idCompany, Long idproduto, String codigoAcesso);
 }

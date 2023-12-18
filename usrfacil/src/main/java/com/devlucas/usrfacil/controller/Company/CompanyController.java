@@ -61,18 +61,20 @@ public class CompanyController {
     public ResponseEntity<?> modificaValorDoProduto(
             @RequestBody @Valid CompanyAtualizaValorProdutoDto companyAtualizaValorProdutoDto,
             @PathVariable Long id,
-            @PathVariable  Long idProduto
+            @PathVariable  Long idProduto,
+            @RequestParam String codigoAcesso
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(modificaValorProdutoService.modificaValorProduto(companyAtualizaValorProdutoDto, id, idProduto));
+                .body(modificaValorProdutoService.modificaValorProduto(companyAtualizaValorProdutoDto, id, idProduto, codigoAcesso));
     }
 
     @PostMapping("/{idProduto}/adicionar-produto")
     public ResponseEntity<?> adicionarProduto(
-            @PathVariable Long idProduto
+            @PathVariable Long idProduto,
+            @RequestParam String codigoAcesso
             ) {
-        this.companyAdicionaObjetosService.adicionaProduto(idProduto);
+        this.companyAdicionaObjetosService.adicionaProduto(idProduto, codigoAcesso);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("");
