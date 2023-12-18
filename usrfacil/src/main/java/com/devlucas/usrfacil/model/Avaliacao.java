@@ -1,11 +1,14 @@
 package com.devlucas.usrfacil.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Builder
@@ -27,12 +30,6 @@ public class Avaliacao {
     @Column(name = "ds_descricao", nullable = false)
     private String descricaoAvaliador;
     @JsonProperty("estrelas")
-    @Column(name = "estrelas", nullable = false)
+    @Column(name = "ds_estrelas", nullable = false)
     private Double qtdEstrelas;
-    @JoinColumn(name = "produto")
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Produto produto;
-    @JoinColumn(name = "company")
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Company company;
 }

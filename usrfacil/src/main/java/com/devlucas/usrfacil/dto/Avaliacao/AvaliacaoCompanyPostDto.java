@@ -26,7 +26,4 @@ public class AvaliacaoCompanyPostDto {
     @JsonProperty("estrelas")
     @NotBlank(message = "Estrelas deve ser obrigatório")
     private Double qtdEstrelas;
-    @JoinColumn(name = "company")
-    @NotBlank(message = "company deve ser obrigatório")
-    private Company company;
 }

@@ -1,6 +1,6 @@
 package com.devlucas.usrfacil.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,14 +51,14 @@ public class Produto {
     private Date dataValidade;
     @JsonProperty("company")
     @JoinColumn(name = "fk_id_company")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Company company;
     @JsonProperty("categoria")
     @JoinColumn(name = "fk_id_categoria")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Categoria categoria;
-    @JsonProperty("telefones")
+    @JsonProperty("avaliacaoProduto")
     @Column(name = "avaliacaoProduto")
-    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Avaliacao> avaliacoesProduto;
 }

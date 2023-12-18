@@ -1,6 +1,6 @@
 package com.devlucas.usrfacil.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,8 +40,8 @@ public class Company {
     @Column(name="ds_company")
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)   //EAGER permite que a colecao seja carregada imediatamente.
     private List<Produto> companyProducts;
-    @JsonProperty("company")
-    @Column(name = "avaliacaoCompany")
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Avaliacao> avCompany;
+    @JsonProperty("avaliacaoCompany")
+    @Column(name = "ds_avaliacaoCompany")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Avaliacao> avaliacoesCompany;
 }

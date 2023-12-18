@@ -1,5 +1,7 @@
 package com.devlucas.usrfacil.User;
 
+import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoCompanyPostDto;
+import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoProdutoPostDto;
 import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.*;
@@ -210,7 +212,6 @@ public class UserV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build();
 
             company1 = Company.builder()
@@ -220,7 +221,6 @@ public class UserV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build();
 
             fabricante = fabricanteRepository.save(Fabricante.builder()
@@ -330,7 +330,6 @@ public class UserV1ControllerTests {
         Produto produto;
         Produto produto1;
         Company company;
-        Company company1;
         Fabricante fabricante;
         Categoria categoria;
         @BeforeEach
@@ -342,17 +341,7 @@ public class UserV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
-                    .build();
-
-            company1 = Company.builder()
-                    .name("Magalu")
-                    .cnpj("122133")
-                    .email("magalu@gmail.com")
-                    .descricao("empresa voltada para o ramo de vendas.")
-                    .telefones(new HashSet<>())
-                    .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
+                    .avaliacoesCompany(new HashSet<>())
                     .build();
 
             fabricante = fabricanteRepository.save(Fabricante.builder()
@@ -385,7 +374,7 @@ public class UserV1ControllerTests {
 
             produto1 =  produtoRepository.save(Produto.builder()
                     .name("Alvejante")
-                    .company(company1)
+                    .company(company)
                     .codigoDeBarras("23456789")
                     .dataFabricação(new Date("12/03/2023"))
                     .dataValidade(new Date("12/01/2024"))
@@ -397,9 +386,8 @@ public class UserV1ControllerTests {
                     .categoria(categoria)
                     .avaliacoesProduto(new ArrayList<>())
                     .build());
-            company.getCompanyProducts().add(produto);
-            company1.getCompanyProducts().add(produto1);
-            companyRepository.save(company1);
+            //company.getCompanyProducts().add(produto);
+            //company1.getCompanyProducts().add(produto1);
             companyRepository.save(company);
         }
 
@@ -413,35 +401,46 @@ public class UserV1ControllerTests {
         }
 
         @Test
-        @DisplayName("Buscando o menor preço de um produto de qualquer empresa a partir de uma categoria")
-        void testFiltragemMenorPrecoPorCategoria() throws Exception{
+        @DisplayName("Avaliando produto")
+        void testAvaliacaoProduto() throws Exception{
             //Arrange
+            AvaliacaoProdutoPostDto avaliacaoProdutoPostDto = AvaliacaoProdutoPostDto.builder()
+                    .nota(8.5)
+                    .descricaoAvaliador("Produto com bom custo benefício")
+                    .qtdEstrelas(5.0)
+                    .build();
             //Act
-            String responseJSONString = driver.perform(get(URI_USUARIO + "/" + categoria.getId() + "/filtragem-preco-menor")
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
+            String responseJSONString = driver.perform(post(URI_USUARIO + "/" + produto.getID() + "/avalia-produto")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(avaliacaoProdutoPostDto)))
+                    .andExpect(status().isCreated())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
 
-            Produto resultado = objectMapper.readValue(responseJSONString, Produto.class);
             //Assert
-            assertEquals(21.00, resultado.getPreco_venda());
+            assertEquals(1, produto.getAvaliacoesProduto().size());
         }
 
         @Test
-        @DisplayName("Buscando o maior preço de um produto de qualquer empresa a partir de uma categoria")
-        void testFiltragemMaiorPrecoPorCategoria() throws Exception{
+        @DisplayName("Avaliando company")
+        void testAvaliacaoCompany() throws Exception{
             //Arrange
+            AvaliacaoCompanyPostDto avaliacaoCompanyPostDto = AvaliacaoCompanyPostDto.builder()
+                    .nota(8.5)
+                    .descricaoAvaliador("Produto com bom custo benefício")
+                    .qtdEstrelas(5.0)
+                    .build();
             //Act
-            String responseJSONString = driver.perform(get(URI_USUARIO + "/" + categoria.getId() + "/filtragem-preco-maior")
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
+            String responseJSONString = driver.perform(post(URI_USUARIO + "/" + company.getID() + "/avalia-company")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(avaliacaoCompanyPostDto)))
+                    .andExpect(status().isCreated())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
 
-            Produto resultado = objectMapper.readValue(responseJSONString, Produto.class);
             //Assert
-            assertEquals(30.00, resultado.getPreco_venda());
+            assertEquals(1, company.getAvaliacoesCompany().size());
         }
+
     }
 }

@@ -203,7 +203,6 @@ public class CompanyV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build();
 
             company1 = Company.builder()
@@ -213,7 +212,6 @@ public class CompanyV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build();
             company.getCompanyProducts().add(produto);
             company1.getCompanyProducts().add(produto);
@@ -292,7 +290,6 @@ public class CompanyV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build());
 
             company1 = companyRepository.save(Company.builder()
@@ -302,7 +299,6 @@ public class CompanyV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build());
             produto =  produtoRepository.save(Produto.builder()
                     .name("Cadeira")

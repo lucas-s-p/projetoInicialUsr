@@ -73,7 +73,6 @@ public class ProdutoV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
-                    .avCompany(new ArrayList<>())
                     .build());
             fabricante = fabricanteRepository.save(Fabricante.builder()
                     .nome("LucasVendas")

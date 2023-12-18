@@ -1,5 +1,6 @@
 package com.devlucas.usrfacil.controller.User;
 
+import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoCompanyPostDto;
 import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoProdutoPostDto;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
@@ -70,12 +71,23 @@ public class UserController {
                 .body(userFiltragemService.filtragemMaiorPreco(idCategoria));
     }
 
-    @PostMapping()
+    @PostMapping("/{idProduto}/avalia-produto")
     public ResponseEntity<?> userAvaliaProduto(
             @RequestBody @Valid AvaliacaoProdutoPostDto avaliacaoProdutoPostDto,
             @PathVariable Long idProduto
     ) {
         this.userAvaliaService.userAvaliaProduto(avaliacaoProdutoPostDto, idProduto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("");
+    }
+
+    @PostMapping("/{idCompany}/avalia-company")
+    public ResponseEntity<?> userAvaliaCompany(
+            @RequestBody @Valid AvaliacaoCompanyPostDto avaliacaoCompanyPostDto,
+            @PathVariable Long idCompany
+    ) {
+        this.userAvaliaService.userAvaliaCompany(avaliacaoCompanyPostDto, idCompany);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("");

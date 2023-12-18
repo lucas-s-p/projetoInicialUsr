@@ -19,14 +19,10 @@ public class AvaliacaoProdutoPostDto {
     @JsonProperty("nota")
     @NotBlank(message = "Nota deve ser obrigatório")
     private Double nota;
-
     @JsonProperty("descricao")
     @NotBlank(message = "Descrição deve ser obrigatório")
     private String descricaoAvaliador;
     @JsonProperty("estrelas")
     @NotBlank(message = "Estrelas deve ser obrigatório")
     private Double qtdEstrelas;
-    @JoinColumn(name = "produto")
-    @NotBlank(message = "Produto deve ser obrigatório")
-    private Produto produto;
 }
