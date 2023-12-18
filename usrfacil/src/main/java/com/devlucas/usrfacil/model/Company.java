@@ -21,6 +21,9 @@ public class Company {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name= "id_company")
     private Long ID;
+    @JsonProperty("chaveDeAcesso")
+    @Column(name = "ds_chaveDeAcesso", nullable = false)
+    private String chaveDeAcesso;
     @JsonProperty("name")
     @Column(name="ds_nome", nullable = false)
     private String name;

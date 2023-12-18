@@ -2,12 +2,10 @@ package com.devlucas.usrfacil.controller.Company;
 
 import com.devlucas.usrfacil.dto.Company.CompanyAtualizaValorProdutoDto;
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
-import com.devlucas.usrfacil.dto.Produto.ProdutoPostDto;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.service.Company.CompanyAdicionaObjetosService;
 import com.devlucas.usrfacil.service.Company.CompanyCrudService;
 import com.devlucas.usrfacil.service.Company.ModificaValorProdutoService;
-import com.devlucas.usrfacil.service.Produto.ProdutoCrudService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,8 +49,9 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCompany(@PathVariable Long id) {
-        this.companyCrudService.companyDelete(id);
+    public ResponseEntity<?> deleteCompany(@PathVariable Long id,
+            @RequestParam String codigoAcesso) {
+        this.companyCrudService.companyDelete(id, codigoAcesso);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body("");
@@ -78,5 +77,4 @@ public class CompanyController {
                 .status(HttpStatus.CREATED)
                 .body("");
     }
-
 }

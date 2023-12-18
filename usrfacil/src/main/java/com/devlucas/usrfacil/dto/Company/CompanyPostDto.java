@@ -22,6 +22,9 @@ public class CompanyPostDto {
     @JsonProperty("name")
     @NotBlank(message = "Nome deve ser obrigatório!")
     private String name;
+    @JsonProperty("chaveDeAcesso")
+    @NotBlank(message = "Chave de acesso deve ser obrigatório!")
+    private String chaveDeAcesso;
     @JsonProperty("produto")
     @NotBlank(message = "Produto deve ser obrigatório!")
     private List<Produto> companyProducts;

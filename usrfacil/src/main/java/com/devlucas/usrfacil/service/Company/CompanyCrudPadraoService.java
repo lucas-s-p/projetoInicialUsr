@@ -2,6 +2,7 @@ package com.devlucas.usrfacil.service.Company;
 
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
 import com.devlucas.usrfacil.exception.Company.CompanyNaoExisteException;
+import com.devlucas.usrfacil.exception.Validacao.CodigoAcessoInvalidoException;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.repository.CompanyRepository;
 import com.devlucas.usrfacil.repository.UserRepository;
@@ -22,8 +23,13 @@ public class CompanyCrudPadraoService implements CompanyCrudService {
     }
 
     @Override
-    public void companyDelete(Long id) {
-        companyRepository.deleteById(id);
+    public void companyDelete(Long id, String codigoAcesso) {
+        Company company = companyRepository.findById(id).orElseThrow(CompanyNaoExisteException::new);
+        if (company.getChaveDeAcesso().equals(codigoAcesso)) {
+            companyRepository.deleteById(id);
+        } else {
+            throw  new CodigoAcessoInvalidoException();
+        }
     }
 
     @Override

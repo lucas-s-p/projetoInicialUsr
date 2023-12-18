@@ -206,6 +206,7 @@ public class UserV1ControllerTests {
         @BeforeEach
         void setup() {
             company = Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -215,6 +216,7 @@ public class UserV1ControllerTests {
                     .build();
 
             company1 = Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Magalu")
                     .cnpj("122133")
                     .email("magalu@gmail.com")
@@ -335,6 +337,7 @@ public class UserV1ControllerTests {
         @BeforeEach
         void setup() {
             company = Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")

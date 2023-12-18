@@ -56,6 +56,7 @@ public class CompanyV1ControllerTests {
         void setup() {
             objectMapper.registerModule(new JavaTimeModule());
             companyPostDto =   CompanyPostDto.builder()
+                    .chaveDeAcesso("12345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -66,6 +67,7 @@ public class CompanyV1ControllerTests {
                     .build();
 
             companyPostDto1 = CompanyPostDto.builder()
+                    .chaveDeAcesso("23456")
                     .name("Magalu")
                     .cnpj("122133")
                     .email("magalu@gmail.com")
@@ -140,8 +142,9 @@ public class CompanyV1ControllerTests {
             //Arrange
             Company company = companyRepository.save(modelMapper.map(companyPostDto, Company.class));
             //Act
-            String responseJSONString = driver.perform(delete(URI_EMPRESA + "/" + company.getID())
-                    .contentType(MediaType.APPLICATION_JSON))
+            String responseJsonString = driver.perform(delete(URI_EMPRESA + "/" + company.getID())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .param("codigoAcesso", company.getChaveDeAcesso()))
                     .andExpect(status().isNoContent())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -197,6 +200,7 @@ public class CompanyV1ControllerTests {
                     .avaliacoesProduto(new ArrayList<>())
                     .build());
             company= Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -206,6 +210,7 @@ public class CompanyV1ControllerTests {
                     .build();
 
             company1 = Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Magalu")
                     .cnpj("122133")
                     .email("magalu@gmail.com")
@@ -284,6 +289,7 @@ public class CompanyV1ControllerTests {
                     .produto(new ArrayList<>())
                     .build());
             company= companyRepository.save(Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -293,6 +299,7 @@ public class CompanyV1ControllerTests {
                     .build());
 
             company1 = companyRepository.save(Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Magalu")
                     .cnpj("122133")
                     .email("magalu@gmail.com")

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CompanyCrudService {
     Company companyCreate(CompanyPostDto companyDto);
-    void companyDelete(Long id);
+    void companyDelete(Long id, String codigoAcesso);
     Company companyFindById(Long id);
     List<Company> companyFindAll();
 }

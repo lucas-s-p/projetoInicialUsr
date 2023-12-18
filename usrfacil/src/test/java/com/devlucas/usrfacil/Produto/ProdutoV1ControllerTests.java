@@ -67,6 +67,7 @@ public class ProdutoV1ControllerTests {
         void setup() {
             objectMapper.registerModule(new JavaTimeModule());
             company = companyRepository.save(Company.builder()
+                    .chaveDeAcesso("12345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
