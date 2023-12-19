@@ -18,6 +18,9 @@ public class User {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name="id_user")
     private Long ID;
+    @JsonProperty("chaveDeAcesso")
+    @Column(name = "ds_chaveDeAcesso", nullable = false)
+    private String chaveDeAcesso;
     @JsonProperty("name")
     @Column(name="ds_name", nullable = false)
     private String name;

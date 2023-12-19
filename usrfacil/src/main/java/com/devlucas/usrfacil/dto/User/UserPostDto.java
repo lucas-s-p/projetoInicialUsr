@@ -10,7 +10,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPostDto {
-
+    @JsonProperty("chaveDeAcesso")
+    @NotBlank(message = "Chave de acesso deve ser obrigatório!")
+    private String chaveDeAcesso;
     @JsonProperty("name")
     @NotBlank(message = "Nome deve ser obrigatório!")
     private String name;

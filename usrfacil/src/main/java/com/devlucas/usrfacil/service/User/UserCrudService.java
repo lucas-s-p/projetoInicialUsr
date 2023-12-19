@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserCrudService {
     User userCreateService(UserPostDto userDTO);
-    void userDeleteById(Long id);
+    void userDeleteById(Long id, String chaveAcesso);
     List<User> userFindAllService();
     User userFindyByIdService(Long id);
 }

@@ -50,8 +50,11 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        this.userCrudService.userDeleteById(id);
+    public ResponseEntity<?> deleteUser(
+            @PathVariable Long id,
+            @RequestParam String codigoAcesso
+    ) {
+        this.userCrudService.userDeleteById(id, codigoAcesso);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body("");

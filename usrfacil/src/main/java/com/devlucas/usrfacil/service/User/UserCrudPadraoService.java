@@ -2,6 +2,7 @@ package com.devlucas.usrfacil.service.User;
 
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.exception.User.UserNaoExisteException;
+import com.devlucas.usrfacil.exception.Validacao.CodigoAcessoInvalidoException;
 import com.devlucas.usrfacil.model.User;
 import com.devlucas.usrfacil.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -22,7 +23,11 @@ public class UserCrudPadraoService implements UserCrudService {
     }
 
     @Override
-    public void userDeleteById(Long id) {
+    public void userDeleteById(Long id, String chaveAcesso) {
+        User user = userRepository.findById(id).orElseThrow(UserNaoExisteException::new);
+        if (!user.getChaveDeAcesso().equals(chaveAcesso)) {
+            throw new CodigoAcessoInvalidoException();
+        }
         userRepository.deleteById(id);
     }
 
