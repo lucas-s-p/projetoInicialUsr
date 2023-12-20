@@ -2,6 +2,7 @@ package com.devlucas.usrfacil.model;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,6 +47,9 @@ public class Produto {
     @JsonProperty("dataFabricacao")
     @Column(name="ds_data_fabricacao", nullable = false)
     private Date dataFabricação;
+    @JsonProperty("codigoBarras")
+    @Column(name = "ds_codigo_barras")
+    private String codigoBarras;
     @JsonProperty("dataValidade")
     @Column(name="ds_data_validade", nullable = true)
     private Date dataValidade;

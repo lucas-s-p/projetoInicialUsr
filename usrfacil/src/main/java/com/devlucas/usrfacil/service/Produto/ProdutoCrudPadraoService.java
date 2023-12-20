@@ -5,11 +5,13 @@ import com.devlucas.usrfacil.exception.Categoria.CategoriaNaoExisteException;
 import com.devlucas.usrfacil.exception.Company.CompanyNaoExisteException;
 import com.devlucas.usrfacil.exception.Fabricante.FabricanteNaoExisteException;
 import com.devlucas.usrfacil.exception.Produto.ProdutoNaoExisteException;
+import com.devlucas.usrfacil.exception.Validacao.CodigoDeBarrasInvalidoException;
 import com.devlucas.usrfacil.model.Produto;
 import com.devlucas.usrfacil.repository.CategoriaRepository;
 import com.devlucas.usrfacil.repository.CompanyRepository;
 import com.devlucas.usrfacil.repository.FabricanteRepository;
 import com.devlucas.usrfacil.repository.ProdutoRepository;
+import com.devlucas.usrfacil.service.validation.ProdutoValidaCodigoDeBarrasService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,13 @@ public class ProdutoCrudPadraoService implements ProdutoCrudService{
     @Autowired
     CategoriaRepository categoriaRepository;
     private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    ProdutoValidaCodigoDeBarrasService produtoValidaCodigoDeBarrasService;
     @Override
     public Produto produtoCreate(ProdutoPostDto produtoDto, Long companyId, Long fabricanteId, Long categoriaId) {
+        if(produtoValidaCodigoDeBarrasService.validaCodigoDeBarras(produtoDto.getCodigoDeBarras()) == false) {
+            throw new CodigoDeBarrasInvalidoException();
+        }
         var company = companyRepository.findById(companyId).orElseThrow(CompanyNaoExisteException::new);
         var fabricante = fabricanteRepository.findById(fabricanteId).orElseThrow(FabricanteNaoExisteException::new);
         var categoria = categoriaRepository.findById(categoriaId).orElseThrow(CategoriaNaoExisteException::new);
