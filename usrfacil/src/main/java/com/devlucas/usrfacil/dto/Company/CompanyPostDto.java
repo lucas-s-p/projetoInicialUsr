@@ -6,6 +6,7 @@ import com.devlucas.usrfacil.model.Telefone;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,6 @@ public class CompanyPostDto {
     private String name;
     @JsonProperty("chaveDeAcesso")
     @NotBlank(message = "Chave de acesso deve ser obrigatório!")
-
     private String chaveDeAcesso;
     @JsonProperty("produto")
     @NotBlank(message = "Produto deve ser obrigatório!")

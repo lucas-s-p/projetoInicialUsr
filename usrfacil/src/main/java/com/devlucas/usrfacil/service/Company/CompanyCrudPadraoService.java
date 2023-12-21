@@ -7,6 +7,7 @@ import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.repository.CompanyRepository;
 import com.devlucas.usrfacil.repository.UserRepository;
 import com.devlucas.usrfacil.service.Company.CompanyCrudService;
+import com.devlucas.usrfacil.service.validation.ValidaChaveAcessoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,16 @@ import java.util.List;
 public class CompanyCrudPadraoService implements CompanyCrudService {
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private ValidaChaveAcessoService validaChaveAcessoService;
     private ModelMapper modelMapper = new ModelMapper();
     @Override
     public Company companyCreate(CompanyPostDto companyDto) {
-        return companyRepository.save(modelMapper.map(companyDto, Company.class));
+        Company company = modelMapper.map(companyDto, Company.class);
+        if (validaChaveAcessoService.validaChave(company.getChaveDeAcesso()) == false) {
+            throw new CodigoAcessoInvalidoException();
+        }
+        return companyRepository.save(company);
     }
 
     @Override
