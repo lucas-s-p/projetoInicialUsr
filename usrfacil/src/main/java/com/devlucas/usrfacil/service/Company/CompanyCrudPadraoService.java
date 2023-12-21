@@ -6,8 +6,6 @@ import com.devlucas.usrfacil.exception.Validacao.ChaveDeAcessoInvalidaException;
 import com.devlucas.usrfacil.exception.Validacao.CodigoAcessoInvalidoException;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.repository.CompanyRepository;
-import com.devlucas.usrfacil.repository.UserRepository;
-import com.devlucas.usrfacil.service.Company.CompanyCrudService;
 import com.devlucas.usrfacil.service.validation.ValidaChaveAcessoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

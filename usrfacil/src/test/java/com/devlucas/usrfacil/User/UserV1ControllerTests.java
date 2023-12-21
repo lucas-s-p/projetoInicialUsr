@@ -46,7 +46,7 @@ public class UserV1ControllerTests {
         void setup() {
             objectMapper.registerModule(new JavaTimeModule());
             userPostDto = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .email("@s")
                     .name("pablo")
                     .cpf("3244222434")
@@ -85,7 +85,7 @@ public class UserV1ControllerTests {
         void testAoBuscarTodosUser() throws Exception {
             //Arrange
             UserPostDto userPostDto1 = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .name("ze")
                     .email("@sa")
                     .cpf("3244222434")
@@ -94,7 +94,7 @@ public class UserV1ControllerTests {
                     .build();
             User user1 = modelMapper.map(userPostDto1, User.class);
             UserPostDto userPostDto2 = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .name("maria")
                     .email("@saw")
                     .cpf("3244222434")
@@ -120,7 +120,7 @@ public class UserV1ControllerTests {
         @DisplayName("Quando busco um usuário pelo id")
         void testQuandoBuscoUmUsuario() throws Exception {
             UserPostDto userPostDto1 = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .name("ze")
                     .email("@sa")
                     .cpf("32442267734")
@@ -129,7 +129,7 @@ public class UserV1ControllerTests {
                     .build();
             User user1 = modelMapper.map(userPostDto1, User.class);
             UserPostDto userPostDto2 = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .name("maria")
                     .email("@saw")
                     .cpf("3244222434")
@@ -156,7 +156,7 @@ public class UserV1ControllerTests {
         @DisplayName("Quando deleto um usuário pelo id")
         void testQuandoDeletoUser() throws Exception{
             UserPostDto userPostDto1 = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .name("ze")
                     .email("@sa")
                     .cpf("3244222434")
@@ -165,7 +165,7 @@ public class UserV1ControllerTests {
                     .build();
             User user1 = modelMapper.map(userPostDto1, User.class);
             UserPostDto userPostDto2 = UserPostDto.builder()
-                    .chaveDeAcesso("23456")
+                    .chaveDeAcesso("2@3456")
                     .name("maria")
                     .email("@saw")
                     .cpf("3341455453")
@@ -214,7 +214,7 @@ public class UserV1ControllerTests {
         @BeforeEach
         void setup() {
             company = Company.builder()
-                    .chaveDeAcesso("12345")
+                    .chaveDeAcesso("1@2345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -345,7 +345,7 @@ public class UserV1ControllerTests {
         @BeforeEach
         void setup() {
             company = Company.builder()
-                    .chaveDeAcesso("12345")
+                    .chaveDeAcesso("1@2345")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -397,8 +397,7 @@ public class UserV1ControllerTests {
                     .categoria(categoria)
                     .avaliacoesProduto(new ArrayList<>())
                     .build());
-            //company.getCompanyProducts().add(produto);
-            //company1.getCompanyProducts().add(produto1);
+            company.getCompanyProducts().add(produto);
             companyRepository.save(company);
         }
 
