@@ -56,7 +56,7 @@ public class CompanyV1ControllerTests {
         void setup() {
             objectMapper.registerModule(new JavaTimeModule());
             companyPostDto =   CompanyPostDto.builder()
-                    .chaveDeAcesso("123456")
+                    .chaveDeAcesso("1@3456")
                     .name("Casas Bahia")
                     .cnpj("122133")
                     .email("casas@gmail.com")
@@ -67,7 +67,7 @@ public class CompanyV1ControllerTests {
                     .build();
 
             companyPostDto1 = CompanyPostDto.builder()
-                    .chaveDeAcesso("234566")
+                    .chaveDeAcesso("2@4566")
                     .name("Magalu")
                     .cnpj("122133")
                     .email("magalu@gmail.com")

@@ -2,6 +2,7 @@ package com.devlucas.usrfacil.service.Company;
 
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
 import com.devlucas.usrfacil.exception.Company.CompanyNaoExisteException;
+import com.devlucas.usrfacil.exception.Validacao.ChaveDeAcessoInvalidaException;
 import com.devlucas.usrfacil.exception.Validacao.CodigoAcessoInvalidoException;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.repository.CompanyRepository;
@@ -23,10 +24,12 @@ public class CompanyCrudPadraoService implements CompanyCrudService {
     @Override
     public Company companyCreate(CompanyPostDto companyDto) {
         Company company = modelMapper.map(companyDto, Company.class);
-        if (validaChaveAcessoService.validaChave(company.getChaveDeAcesso()) == false) {
-            throw new CodigoAcessoInvalidoException();
+        String respostaValida = validaChaveAcessoService.validaChave(company.getChaveDeAcesso());
+        if (!respostaValida.equals("Válida")) {
+            throw new ChaveDeAcessoInvalidaException(respostaValida);
         }
         return companyRepository.save(company);
+
     }
 
     @Override
