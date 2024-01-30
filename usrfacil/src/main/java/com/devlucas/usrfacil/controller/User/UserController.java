@@ -4,10 +4,7 @@ import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoCompanyPostDto;
 import com.devlucas.usrfacil.dto.Avaliacao.AvaliacaoProdutoPostDto;
 import com.devlucas.usrfacil.dto.User.UserPostDto;
 import com.devlucas.usrfacil.model.User;
-import com.devlucas.usrfacil.service.User.UserAvaliaService;
-import com.devlucas.usrfacil.service.User.UserCrudService;
-import com.devlucas.usrfacil.service.User.UserFiltragemService;
-import com.devlucas.usrfacil.service.User.UserInteressaPromocaoService;
+import com.devlucas.usrfacil.service.User.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +29,8 @@ public class UserController {
     @Autowired
     private UserInteressaPromocaoService userInteressaPromocaoService;
 
+    @Autowired
+    private UserAdicionaProdCarrinhoPadraoService userAdicionaProdCarrinhoPadraoService;
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity
@@ -111,4 +110,11 @@ public class UserController {
                 .body("");
     }
 
+    @PatchMapping("/adiciona-produto/{idProduto}/{idUser}")
+    public ResponseEntity<?> adicionaProdCarrinho(@PathVariable Long idUser, @PathVariable Long idProduto) {
+        this.userAdicionaProdCarrinhoPadraoService.addProdutoAoCarrinho(idUser, idProduto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("");
+    }
 }

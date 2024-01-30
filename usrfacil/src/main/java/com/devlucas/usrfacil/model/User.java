@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @Table(name = "tb_user")
@@ -39,6 +40,9 @@ public class User implements NotificaClientePromocaoProduto {
     @JsonProperty
     @Column(name="ds_sexo", nullable = false)
     private String sexo;
+    @JsonProperty("carrinho")
+    @OneToOne(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
+    private Carrinho carrinho;
 
     @Override
     public void notifica(EventoCliente eventoCliente) {
