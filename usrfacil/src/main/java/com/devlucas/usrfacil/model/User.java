@@ -1,5 +1,7 @@
 package com.devlucas.usrfacil.model;
 
+import com.devlucas.usrfacil.Notificacao.EventoCliente;
+import com.devlucas.usrfacil.Notificacao.NotificaClientePromocaoProduto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements NotificaClientePromocaoProduto {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name="id_user")
@@ -37,4 +39,9 @@ public class User {
     @JsonProperty
     @Column(name="ds_sexo", nullable = false)
     private String sexo;
+
+    @Override
+    public void notifica(EventoCliente eventoCliente) {
+    System.out.println("Cliente: " + name + ",o produto: " + eventoCliente.getProduto().getName() + " está em promoção.");
+    }
 }

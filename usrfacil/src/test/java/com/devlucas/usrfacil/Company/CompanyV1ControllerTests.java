@@ -1,5 +1,6 @@
 package com.devlucas.usrfacil.Company;
 
+import com.devlucas.usrfacil.Notificacao.NotificaSourceCliente;
 import com.devlucas.usrfacil.dto.Company.CompanyAtualizaValorProdutoDto;
 import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
 import com.devlucas.usrfacil.model.Categoria;
@@ -207,6 +208,7 @@ public class CompanyV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .notificaSourceCliente(new NotificaSourceCliente())
                     .build();
 
             company1 = Company.builder()
@@ -217,6 +219,7 @@ public class CompanyV1ControllerTests {
                     .descricao("empresa voltada para o ramo de vendas.")
                     .telefones(new HashSet<>())
                     .companyProducts(new ArrayList<>())
+                    .notificaSourceCliente(new NotificaSourceCliente())
                     .build();
             company.getCompanyProducts().add(produto);
             company1.getCompanyProducts().add(produto);

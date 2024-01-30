@@ -1,5 +1,6 @@
 package com.devlucas.usrfacil.model;
 
+import com.devlucas.usrfacil.Notificacao.NotificaSourceCliente;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,4 +48,7 @@ public class Company {
     @Column(name = "ds_avaliacaoCompany")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Avaliacao> avaliacoesCompany;
+    @JsonProperty("interessadosPromocao")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private NotificaSourceCliente notificaSourceCliente;
 }

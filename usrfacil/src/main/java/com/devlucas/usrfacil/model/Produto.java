@@ -2,7 +2,6 @@ package com.devlucas.usrfacil.model;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

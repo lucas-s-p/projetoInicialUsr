@@ -7,6 +7,7 @@ import com.devlucas.usrfacil.model.User;
 import com.devlucas.usrfacil.service.User.UserAvaliaService;
 import com.devlucas.usrfacil.service.User.UserCrudService;
 import com.devlucas.usrfacil.service.User.UserFiltragemService;
+import com.devlucas.usrfacil.service.User.UserInteressaPromocaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserAvaliaService userAvaliaService;
+
+    @Autowired
+    private UserInteressaPromocaoService userInteressaPromocaoService;
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
@@ -93,6 +97,17 @@ public class UserController {
         this.userAvaliaService.userAvaliaCompany(avaliacaoCompanyPostDto, idCompany);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
+                .body("");
+    }
+
+    @PatchMapping("/addCliente/{idCompany}")
+    public ResponseEntity<?> clienteInteressaPromocao(
+            @RequestBody @Valid User user,
+            @PathVariable Long idCompany
+    ) {
+        this.userInteressaPromocaoService.addInteresseCliente(user, idCompany);
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .body("");
     }
 

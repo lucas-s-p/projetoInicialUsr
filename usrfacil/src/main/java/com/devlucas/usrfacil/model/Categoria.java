@@ -25,6 +25,6 @@ public class Categoria {
     private String nome;
 
     @JsonProperty("produto")
-    @OneToMany(mappedBy = "categoria", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "categoria", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private List<Produto> produto;
 }

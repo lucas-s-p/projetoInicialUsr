@@ -1,5 +1,6 @@
 package com.devlucas.usrfacil.service.Company;
 
+import com.devlucas.usrfacil.Notificacao.NotificaSourceCliente;
 import com.devlucas.usrfacil.dto.Company.CompanyAtualizaValorProdutoDto;
 import com.devlucas.usrfacil.exception.Company.CompanyNaoExisteException;
 import com.devlucas.usrfacil.exception.Validacao.CodigoAcessoInvalidoException;
@@ -31,6 +32,8 @@ public class ModificaValorProdutoPadraoService implements ModificaValorProdutoSe
             }
         }
         produtoX.setPreco_venda(companyAtualizaValorProdutoDto.getValor());
+        System.out.println(company.getNotificaSourceCliente().getClientes().size());
+        company.getNotificaSourceCliente().notificaClientePromocao(produtoX);
         companyRepository.save(company);
         return produtoRepository.save(produtoX);
     }
