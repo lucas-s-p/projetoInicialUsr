@@ -5,6 +5,7 @@ import com.devlucas.usrfacil.dto.Company.CompanyPostDto;
 import com.devlucas.usrfacil.model.Company;
 import com.devlucas.usrfacil.service.Company.CompanyAdicionaObjetosService;
 import com.devlucas.usrfacil.service.Company.CompanyCrudService;
+import com.devlucas.usrfacil.service.Company.ListaProdutosCompanyService;
 import com.devlucas.usrfacil.service.Company.ModificaValorProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class CompanyController {
 
     @Autowired
     private ModificaValorProdutoService modificaValorProdutoService;
+
+    @Autowired
+    private ListaProdutosCompanyService listaProdutosCompanyService;
 
     @PostMapping
     public ResponseEntity<?> createCompany(@RequestBody @Valid CompanyPostDto companyPostDto) {
@@ -78,5 +82,12 @@ public class CompanyController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("");
+    }
+
+    @GetMapping("/lista-produtos/{idCompany}")
+    public ResponseEntity<?> listaProdutos(@PathVariable Long idCompany) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(listaProdutosCompanyService.listaProdutosCompany(idCompany));
     }
 }

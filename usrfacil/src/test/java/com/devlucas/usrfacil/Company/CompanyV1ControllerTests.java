@@ -24,10 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -349,6 +346,104 @@ public class CompanyV1ControllerTests {
 
             //Assert
             assertEquals(1, company.getCompanyProducts().size());
+        }
+    }
+
+    @Nested
+    @Transactional
+    @DisplayName("Classe de testes para listar todos produtos de uma company")
+    class TestListarProdutos {
+        @Autowired
+        CompanyRepository companyRepository;
+        @Autowired
+        ProdutoRepository produtoRepository;
+        @Autowired
+        FabricanteRepository fabricanteRepository;
+        @Autowired
+        CategoriaRepository categoriaRepository;
+        Fabricante fabricante;
+        Categoria categoria;
+        Company company;
+        Produto produto;
+        Produto produto1;
+        @BeforeEach
+        void setup() {
+            objectMapper.registerModule(new JavaTimeModule());
+            fabricante = fabricanteRepository.save(Fabricante.builder()
+                    .nome("LucasVendas")
+                    .cnpj("324542")
+                    .descricao("empresa voltada para produção.")
+                    .email("lucasvendas@gmail.com")
+                    .telefones(new ArrayList<>())
+                    .build());
+
+            categoria = categoriaRepository.save(Categoria.builder()
+                    .nome("Varejos")
+                    .produto(new ArrayList<>())
+                    .build());
+
+            produto =  produtoRepository.save(Produto.builder()
+                    .name("Cadeira")
+                    .company(company)
+                    .codigoDeBarras("23456789")
+                    .dataFabricação(new Date("12/03/2023"))
+                    .dataValidade(new Date("12/01/2024"))
+                    .fabriante(fabricante)
+                    .preco_compra(23.00)
+                    .preco_venda(30.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
+                    .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
+                    .build());
+            produto1 = produtoRepository.save(Produto.builder()
+                    .name("Telefone")
+                    .company(company)
+                    .codigoDeBarras("23456789")
+                    .dataFabricação(new Date("12/03/2023"))
+                    .dataValidade(new Date("12/01/2024"))
+                    .fabriante(fabricante)
+                    .preco_compra(23.00)
+                    .preco_venda(30.00)
+                    .descricao("Produto produzido ecologicamente.")
+                    .quantidade(123)
+                    .categoria(categoria)
+                    .avaliacoesProduto(new ArrayList<>())
+                    .build());
+            company= Company.builder()
+                    .chaveDeAcesso("12345")
+                    .name("Casas Bahia")
+                    .cnpj("122133")
+                    .email("casas@gmail.com")
+                    .descricao("empresa voltada para o ramo de vendas.")
+                    .telefones(new HashSet<>())
+                    .companyProducts(new ArrayList<>())
+                    .build();
+            company.getCompanyProducts().addAll(Arrays.asList(produto, produto1));
+            companyRepository.save(company);
+        }
+
+        @AfterEach
+        void tearDown() {
+            companyRepository.deleteAll();
+            categoriaRepository.deleteAll();
+            fabricanteRepository.deleteAll();
+            produtoRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("Listando todos produtos de uma company")
+        void testQuandoListoTodosProdutosDeUmaCompany() throws Exception{
+            //Arrange
+            //Act
+            String responseJSONString = driver.perform(get(URI_EMPRESA + "/lista-produtos/" + company.getID())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+            List<Produto> resultado = objectMapper.readValue(responseJSONString, new TypeReference<List<Produto>>(){});
+            //Assert
+            assertEquals(2, resultado.size());
         }
     }
 }

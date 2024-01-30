@@ -1,10 +1,13 @@
 package com.devlucas.usrfacil.Notificacao;
 
+import com.devlucas.usrfacil.exception.User.UserNaoExisteException;
 import com.devlucas.usrfacil.model.Produto;
 import com.devlucas.usrfacil.model.User;
+import com.devlucas.usrfacil.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +19,7 @@ public class NotificaSourceCliente {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("id")
+    @Column(name = "id_notifica")
     private Long id;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonProperty("clientes")
