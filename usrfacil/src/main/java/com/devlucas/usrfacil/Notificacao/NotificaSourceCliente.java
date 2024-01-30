@@ -6,18 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "tb_notifica_promocao")
 public class NotificaSourceCliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("id")
     private Long id;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> clientes = new ArrayList<>();
+    @JsonProperty("clientes")
+    private Set<User> clientes = new HashSet<>();
 
     public void notificaClientePromocao(Produto produto) {
         EventoCliente eventoCliente = new EventoCliente(this, produto);

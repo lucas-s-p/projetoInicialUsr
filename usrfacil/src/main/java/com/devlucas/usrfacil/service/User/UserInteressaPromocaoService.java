@@ -4,5 +4,5 @@ import com.devlucas.usrfacil.model.User;
 
 @FunctionalInterface
 public interface UserInteressaPromocaoService {
-    void addInteresseCliente(User user, Long idCompany);
+    void addInteresseCliente(Long idUser, Long idCompany);
 }

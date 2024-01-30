@@ -100,12 +100,12 @@ public class UserController {
                 .body("");
     }
 
-    @PatchMapping("/addCliente/{idCompany}")
+    @PatchMapping("/addCliente/{idUser}/{idCompany}")
     public ResponseEntity<?> clienteInteressaPromocao(
-            @RequestBody @Valid User user,
+            @PathVariable Long idUser,
             @PathVariable Long idCompany
     ) {
-        this.userInteressaPromocaoService.addInteresseCliente(user, idCompany);
+        this.userInteressaPromocaoService.addInteresseCliente(idUser, idCompany);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("");

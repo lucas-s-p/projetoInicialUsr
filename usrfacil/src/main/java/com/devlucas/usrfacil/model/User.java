@@ -42,6 +42,6 @@ public class User implements NotificaClientePromocaoProduto {
 
     @Override
     public void notifica(EventoCliente eventoCliente) {
-    System.out.println("Cliente: " + name + ",o produto: " + eventoCliente.getProduto().getName() + " está em promoção.");
+    System.out.println("Cliente: " + name + ",o produto: " + eventoCliente.getProduto().getName() + ", está em promoção.");
     }
 }
