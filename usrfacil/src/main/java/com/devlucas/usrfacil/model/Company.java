@@ -39,7 +39,7 @@ public class Company {
     private String descricao;
     @JsonProperty("telefones")
     @Column(name = "ds_telefones", nullable = false)
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Telefone> telefones;
     @Column(name="ds_company")
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)   //EAGER permite que a colecao seja carregada imediatamente.

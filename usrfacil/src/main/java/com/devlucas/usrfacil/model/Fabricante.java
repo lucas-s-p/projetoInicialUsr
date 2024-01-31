@@ -34,6 +34,6 @@ public class Fabricante {
     private String descricao;
     @JsonProperty("telefones")
     @Column(name = "ds_telefones", nullable = false)
-    @OneToMany(mappedBy = "fabricante", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Telefone> telefones;
 }
