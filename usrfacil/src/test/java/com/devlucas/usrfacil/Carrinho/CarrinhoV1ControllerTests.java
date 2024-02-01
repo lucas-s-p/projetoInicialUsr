@@ -161,7 +161,7 @@ public class CarrinhoV1ControllerTests {
     void testQuandoFinalizoACompraDosProdutosDoCarrinho() throws Exception {
         //Arrange
         //Act
-        String responseJSONString = driver.perform(patch(URI_USUARIO + "/finaliza-compra/" + user.getID() +"/"+ distribuidora.getIdDistribuidora())
+        String responseJSONString = driver.perform(patch(URI_USUARIO + "/finaliza-compra/" + user.getID())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())

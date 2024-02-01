@@ -121,9 +121,9 @@ public class UserController {
                 .body("");
     }
 
-    @PatchMapping("/finaliza-compra/{idUser}/{idDistribuidora}")
-    public ResponseEntity<?> finalizaCompraCarrinho(@PathVariable Long idUser, @PathVariable Long idDistribuidora) {
-        this.userFinalizaCompraService.finalizaCompra(idUser, idDistribuidora);
+    @PatchMapping("/finaliza-compra/{idUser}")
+    public ResponseEntity<?> finalizaCompraCarrinho(@PathVariable Long idUser) {
+        this.userFinalizaCompraService.finalizaCompra(idUser);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("");
