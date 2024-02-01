@@ -42,5 +42,8 @@ public class Distribuidora {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Telefone> telefones;
 
-
+    @JsonProperty("pedidos_em_espera")
+    @Column(name = "ds_pedidos_em_espera")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Carrinho> pedidosEmEspera;
 }

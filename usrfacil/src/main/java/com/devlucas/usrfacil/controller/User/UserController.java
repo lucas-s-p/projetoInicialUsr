@@ -31,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserAdicionaProdCarrinhoPadraoService userAdicionaProdCarrinhoPadraoService;
+
+    @Autowired
+    private UserFinalizaCompraService userFinalizaCompraService;
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity
@@ -113,6 +116,14 @@ public class UserController {
     @PatchMapping("/adiciona-produto/{idProduto}/{idUser}")
     public ResponseEntity<?> adicionaProdCarrinho(@PathVariable Long idUser, @PathVariable Long idProduto) {
         this.userAdicionaProdCarrinhoPadraoService.addProdutoAoCarrinho(idUser, idProduto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("");
+    }
+
+    @PatchMapping("/finaliza-compra/{idUser}/{idDistribuidora}")
+    public ResponseEntity<?> finalizaCompraCarrinho(@PathVariable Long idUser, @PathVariable Long idDistribuidora) {
+        this.userFinalizaCompraService.finalizaCompra(idUser, idDistribuidora);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("");

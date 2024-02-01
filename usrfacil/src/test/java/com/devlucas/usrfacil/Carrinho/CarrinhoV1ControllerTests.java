@@ -41,6 +41,8 @@ public class CarrinhoV1ControllerTests {
     @Autowired
     ProdutoRepository produtoRepository;
     @Autowired
+    DistribuidoraRepository distribuidoraRepository;
+    @Autowired
     MockMvc driver;
     ObjectMapper objectMapper = new ObjectMapper();
     ModelMapper modelMapper = new ModelMapper();
@@ -50,6 +52,7 @@ public class CarrinhoV1ControllerTests {
     Fabricante fabricante;
     Categoria categoria;
     User user;
+    Distribuidora distribuidora;
     @BeforeEach
     void setup() {
         objectMapper.registerModule(new JavaTimeModule());
@@ -118,6 +121,15 @@ public class CarrinhoV1ControllerTests {
                         .carrinho(new Carrinho())
                         .chaveDeAcesso("123456")
                 .build());
+        distribuidora = distribuidoraRepository.save(Distribuidora.builder()
+                        .cnpj("12345678")
+                        .nomeDistribuidora("Ltda Entregas")
+                        .razaoSocial("Entregas")
+                        .funcionarios(new HashSet<>())
+                        .pedidosEmEspera(new HashSet<>())
+                        .telefones(new HashSet<>())
+                        .veiculos(new HashSet<>())
+                .build());
     }
 
     @AfterEach
@@ -142,5 +154,18 @@ public class CarrinhoV1ControllerTests {
         //Assert
         assertEquals(1, user.getCarrinho().getObjetosCarrinho().size());
         assertEquals(produto.getID(), user.getCarrinho().getObjetosCarrinho().get(0));
+    }
+
+    @Test
+    @DisplayName("Finalizando a compra no carrinho do cliente")
+    void testQuandoFinalizoACompraDosProdutosDoCarrinho() throws Exception {
+        //Arrange
+        //Act
+        String responseJSONString = driver.perform(patch(URI_USUARIO + "/finaliza-compra/" + user.getID() +"/"+ distribuidora.getIdDistribuidora())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn().getResponse().getContentAsString();
+        //Assert
     }
 }
