@@ -54,7 +54,6 @@ public class UserController {
                 .status(HttpStatus.CREATED)
                 .body(userCrudService.userCreateService(userPostDto));
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(
             @PathVariable Long id,

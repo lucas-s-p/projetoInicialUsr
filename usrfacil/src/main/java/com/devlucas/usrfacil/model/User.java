@@ -27,7 +27,6 @@ public class User implements NotificaClientePromocaoProduto {
     @JsonProperty("name")
     @Column(name="ds_name", nullable = false)
     private String name;
-
     @JsonProperty("cpf")
     @Column(name="ds_cpf", nullable = false)
     private String cpf;
