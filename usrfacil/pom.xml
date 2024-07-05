@@ -15,6 +15,7 @@
 	<description>Acesso do Usuário a documentos</description>
 	<properties>
 		<java.version>17</java.version>
+		<spring.boot.main.class>com.devlucas.usrfacil.UsrfacilApplication</spring.boot.main.class>
 	</properties>
 	<dependencies>
 		<!-- Dependência do Springdoc OpenAPI -->
@@ -70,6 +71,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.devlucas.usrfacil.UsrfacilApplication</mainClass>
+				</configuration>
 			</plugin>
 
 			<plugin>
