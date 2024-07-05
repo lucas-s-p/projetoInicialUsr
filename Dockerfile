@@ -5,7 +5,7 @@ FROM ubuntu:latest AS build
 RUN apt-get update && apt-get install -y openjdk-17-jdk maven
 
 # Copia todo o conteúdo do diretório atual para o contêiner
-COPY . .
+COPY usrfacil/pom.xml .
 
 # Compila o projeto utilizando Maven
 RUN mvn clean install
