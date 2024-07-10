@@ -66,7 +66,7 @@ public class UserV1ControllerTests {
             // nenhuma necessidade além do setup()
 
             // Act
-            String responseJSONString = driver.perform(post(URI_USUARIO)
+            String responseJSONString = driver.perform(post(URI_USUARIO + "/criar-cliente")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(userPostDto)))
                     .andExpect(status().isCreated())

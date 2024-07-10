@@ -48,7 +48,7 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userCrudService.userFindyByIdService(id));
     }
-    @PostMapping
+    @PostMapping("/criar-cliente")
     public ResponseEntity<?> createUser(@RequestBody @Valid UserPostDto userPostDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
